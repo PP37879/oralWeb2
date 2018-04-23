@@ -1,0 +1,69 @@
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <img src="assets/img/success.png" style="width:100px; height:100px;">
+        <p>เพิ่มข้อมูลนักเรียน / ผู้ป่วยเรียบร้อย</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<form class="import">
+  <div class="import-form">
+    <div class="input">
+      <h1 id="header">เพิ่มข้อมูลผู้ป่วย / นักเรียน</h1>
+      <input type="text" class="form-control" id="school_name" placeholder="ชื่อโรงเรียน" [(ngModel)]="school_name" name="schoolname">
+      <input type="text" class="form-control" id="school_addr" placeholder="ที่ตั้งของโรงเรียน" [(ngModel)]="school_addr" name="school_addr">
+      <input type="text" class="form-control" id="std_name" placeholder="ชื่อ-สกุลนักเรียน" [(ngModel)]="std_name" name="std_name">
+      <label>เพศ</label>
+      <label class="radio-inline">
+        <input type="radio" id="male" name="gender" [(ngModel)]="gender" value="male">&nbsp;&nbsp;ชาย</label>
+      <label class="radio-inline">
+        <input type="radio" id="female" name="gender" [(ngModel)]="gender" value="female">&nbsp;&nbsp;หญิง</label>
+
+      <div>
+        <label style="margin-top:25px">วันเกิด</label>
+        <input type="date" class="form-control" id="birth" placeholder="วันเกิด" name="dateOfBirth" [(ngModel)]="dateOfBirth">
+      </div>
+      <input type="text" class="form-control" id="std_addr" placeholder="ที่อยู่ของนักเรียน" name="std_addr" [(ngModel)]="std_addr">
+      <input type="text" class="form-control" id="nation" placeholder="สัญชาติ" name="nation" [(ngModel)]="nation">
+      <input type="text" class="form-control" id="religion" placeholder="ศาสนา" name="religion" [(ngModel)]="religion">
+      <input type="text" class="form-control" id="dad_name" placeholder="ชื่อ-สกุลบิดา" name="dad_name" [(ngModel)]="dad_name">
+      <input type="text" class="form-control" id="mom_name" placeholder="ชื่อ-สกุลมารดา" name="mom_name" [(ngModel)]="mom_name">
+
+      <div class="form-group">
+        <label for="sel1">สถานภาพของบิดา
+        </label>
+        <select class="form-control" id="sel1" name="dad_status" [(ngModel)]="dad_status">
+          <option value="มีชีวิตอยู่">มีชีวิตอยู่</option>
+          <option value="หย่าร้าง">หย่าร้าง</option>
+          <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
+        </select>
+
+        <label for="sel2">สถานภาพของมารดา
+        </label>
+        <select class="form-control" id="sel2" name="mom_status" [(ngModel)]="mom_status"> 
+          <option value="มีชีวิตอยู่">มีชีวิตอยู่</option>
+          <option value="หย่าร้าง">หย่าร้าง</option>
+          <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
+        </select>
+      </div>
+      <input type="text" class="form-control" id="dad_job" placeholder="อาชีพของบิดา" name="dad_job" [(ngModel)]="dad_job">
+      <input type="text" class="form-control" id="mom_job" placeholder="อาชีพของมารดา" name="mom_job" [(ngModel)]="mom_job">
+      <input type="text" class="form-control" id="parent_name" placeholder="ชื่อ-สกุลผู้ปกครอง" name="parent_name" [(ngModel)]="parent_name">
+      <input type="text" class="form-control" id="parent_phone" placeholder="เบอร์โทรศัพท์ผู้ปกครอง" name="parent_phone" [(ngModel)]="parent_phone">
+      <input type="text" class="form-control" id="parent_addr" placeholder="ที่อยู่ของผู้ปกครอง" name="parent_addr" [(ngModel)]="parent_addr">
+      <input type="text" class="form-control" id="teacher" placeholder="ชื่อครูประจำชั้น" name="teacher" [(ngModel)]="teacher">
+      <input type="text" class="form-control" id="master" placeholder="ชื่อผู้อำนวยการของโรงเรียน" name="master" [(ngModel)]="master">
+      <input type="number" class="form-control" id="decay_num" placeholder="จำนวนฟันผุที่ตรวจพบในครั้งนี้" name="decay_num" [(ngModel)]="decay_num">
+      <div class="forBtn">
+        <button type="submit" class="btn btn-success" (click)="add()" data-toggle="modal" data-target="#myModal" id="importSubmit" onclick="showModal()">เสร็จสิ้น</button>
+      </div>
+    </div>
+  </div>
+</form>

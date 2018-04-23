@@ -1,0 +1,21 @@
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm">
+  </div>
+</div>
+<form class="signup">
+  <div class="regis-form">
+    <div class="input">
+      <h1 id="header">REGISTER</h1>
+      <input type="text" class="form-control" id="username" placeholder="Enter your username" name="username" [(ngModel)]="username">
+      <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password" [(ngModel)]="password">
+      <input type="password" class="form-control" id="cfpassword" placeholder="Confirm your password" name="confirmPassword" [(ngModel)]="confirmPassword">
+      <input type="text" class="form-control" id="firstname" placeholder="Enter your firstname" name="firstname" [(ngModel)]="firstname">
+      <input type="text" class="form-control" id="lastname" placeholder="Enter your lastname" name="lastname" [(ngModel)]="lastname">
+      <input type="email" class="form-control" id="mail" placeholder="Enter your E-Mail" name="email" [(ngModel)]="email">
+      <div class="forBtn">
+        <button type="submit" class="btn btn-success" (click)="insertDentist()">Register</button>
+      </div>
+    </div>
+  </div>
+</form>

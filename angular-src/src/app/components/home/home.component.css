@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Amaranth|Exo:700|Oleo+Script|Ubuntu:700|Viga');
+@import url('https://fonts.googleapis.com/css?family=Francois+One|Roboto:500,700');
+.all{
+    text-align: center;
+}
+img{
+    text-align: center;
+    max-width: 100%;
+    height: auto;
+    margin: 25px;
+}
+button{
+    /* font-family: 'Viga', sans-serif; */
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-right: 15px;
+    margin-left: 15px;
+    box-shadow: 5px 5px 3px rgba(128, 128, 128, 0.808);
+    border: 1px ;
+    border-radius:10px;
+    width: 15%;
+}
+
+

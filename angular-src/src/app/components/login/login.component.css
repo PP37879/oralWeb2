@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css?family=Amaranth|Delius+Unicase:700|Exo:700|Londrina+Solid|Oleo+Script|Ubuntu:700|Vast+Shadow|Viga');
+@import url('https://fonts.googleapis.com/css?family=Francois+One');
+@import url('https://fonts.googleapis.com/css?family=Francois+One|Roboto:500,700');
+.form-group{
+    text-align: center;
+    /* font-family: 'Delius Unicase', cursive; */
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 10px;
+    padding: 30px;
+    margin: auto;
+    width: 400px;
+    background-color: rgba(204, 204, 204, 0.678);
+    box-shadow: 5px 5px 3px rgba(128, 128, 128, 0.808);
+    border: 1.5px ;
+    text-shadow: 2px 2px #0000006b;
+}
+
+.form-control{
+    margin-bottom: 35px;
+}
+
+#header{
+    margin-bottom: 35px;
+    font-size: 30px;
+    text-shadow: 2px 2px #0000006b;
+}
+
+.logo{
+    text-align: center;
+}
+
+img{
+    margin-top: 25px;
+    max-width: 300px;
+    height: auto;
+}
+input{
+    box-shadow: 5px 5px 3px rgba(128, 128, 128, 0.808);
+    border: 1px ;
+    border-radius: 10px;
+    font-size: 20px;
+}
+button{
+    box-shadow: 5px 5px 3px rgba(128, 128, 128, 0.808);
+    border: 1px ;
+    border-radius: 10px;
+    font-size: 20px;
+    width: 50%;
+}

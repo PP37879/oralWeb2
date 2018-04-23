@@ -1,0 +1,21 @@
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+          <img src="assets/img/success.png" style="width:100px; height:100px;">
+          <p>เพิ่มข้อมูลนักเรียน / ผู้ป่วยเรียบร้อย</p>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+
+<div class="desc">เลือกไฟล์ที่ต้องการนำเข้าข้อมูล</div>
+<div class="desc">ไฟล์ต้องมีสกุลไฟล์เป็น .xlsx เท่านั้น</div>
+<div class="import-form">
+    <input type="file" (change)="incomingfile($event)" />
+    <button type="submit" class="btn btn-success" (click)="Upload()" data-toggle="modal" data-target="#myModal" id="importSubmit" onclick="showModal()">OK</button>
+</div>

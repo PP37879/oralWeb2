@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Amaranth|Delius+Unicase:700|Exo:700|Londrina+Solid|Mitr|Oleo+Script|Ubuntu:700|Vast+Shadow|Viga');
+input, button , select{
+    box-shadow: 5px 5px 3px rgba(128, 128, 128, 0.808);
+    border: 1px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.form-control{
+    margin-bottom: 25px;
+    height: auto;
+}
+
+.pdf-form{
+    text-align: center;
+    font-family: 'Mitr', cursive;
+    padding: 10px;
+    margin: auto;
+    max-width: 700px;
+    font-size: 24px;
+}
+.checkbox{
+    text-align: left;
+}
+
+input[type="checkbox"]{
+    box-shadow: 0px 0px 0px rgba(128, 128, 128, 0.808);
+    width: 20px;
+    height: 20px;
+}

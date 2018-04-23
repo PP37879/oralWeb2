@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css?family=Amaranth|Delius+Unicase:700|Exo:700|Londrina+Solid|Mitr|Oleo+Script|Ubuntu:700|Vast+Shadow|Viga');
+@import url('https://fonts.googleapis.com/css?family=Francois+One|Open+Sans:800|Roboto:500,700');
+input{
+    box-shadow: 5px 5px 3px rgba(128, 128, 128, 0.808);
+    border: 1px;
+    font-size: 17px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+button{
+    box-shadow: 5px 5px 3px rgba(128, 128, 128, 0.808);
+    border: 1px;
+    font-size: 17px;
+    border-radius: 10px;
+    font-size: 20px;
+    width: 30%;
+}
+
+.regis-form{
+    text-align: center;
+    font-family: 'Mitr', cursive;
+    padding: 30px;
+    margin: auto;
+    max-width: 600px;
+}
+
+.form-control{
+    margin-bottom: 35px;
+    padding: 20px;
+}
+
+#header{
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 25px;
+    font-size: 40px;
+    text-shadow: 2px 2px #0000006b;
+}
+.modal-body{
+    text-align: center;
+    font-family: 'Mitr', cursive;
+    padding: 10px;
+    margin: auto;
+    max-width: 700px;
+    font-size: 24px;
+}

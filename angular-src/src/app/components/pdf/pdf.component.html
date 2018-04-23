@@ -1,0 +1,49 @@
+<div class="pdf-form">
+  <div>
+    <label style="margin-top:25px">วันที่ที่ต้องการ</label>
+    <input type="date" class="form-control" id="date" placeholder="วันเกิด">
+  </div>
+  <div class="form-group">
+    <label for="sel0">โรงเรียน
+    </label>
+    <select class="form-control" id="sel0">
+      <option>อนุบาลแห่งมหาวิทยาลัยธรรมศาสตร์</option>
+      <option>อนุบาลปทุมธานี</option>
+      <option>ประถมศึกษาแห่งมหาวิทยาลัยธรรมศาสตร์</option>
+    </select>
+
+    <label for="sel1">รหัสประจำตัวผู้ป่วย / นักเรียน
+    </label>
+    <select class="form-control" id="sel1">
+      <option>2301610001</option>
+      <option>2301610002</option>
+      <option>2301610003</option>
+    </select>
+
+    <label for="sel2">ถึง
+    </label>
+    <select class="form-control" id="sel2">
+      <option>2301610001</option>
+      <option>2301610002</option>
+      <option>2301610003</option>
+    </select>
+
+    <label for="ckeckbox" style="margin-top:25px">เลือกประเภทเอกสารที่ต้องการดาวน์โหลด</label>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">&nbsp;&nbsp;เอกสารรายงานผลสำหรับผู้ปกครอง</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">&nbsp;&nbsp;เอกสารรายงานผลสำหรับครูประจำชั้น</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">&nbsp;&nbsp;เอกสารรายงานผลสำหรับผู้อำนวยการโรงเรียน</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">&nbsp;&nbsp;เอกสารรายงานผลสำหรับทันตแพทย์</label>
+    </div>
+  </div>
+
+  <div class="forBtn" style="margin-top:35px">
+    <button type="submit" class="btn btn-success" onclick="chooseFile()">ดาวน์โหลด</button>
+  </div>
+</div>

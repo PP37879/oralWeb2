@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Amaranth|Delius+Unicase:700|Exo:700|Londrina+Solid|Mitr|Oleo+Script|Ubuntu:700|Vast+Shadow|Viga');
+input, button{
+    box-shadow: 5px 5px 3px rgba(128, 128, 128, 0.808);
+    border: 1px ;
+    border-radius: 10px;
+    font-size: 24px;
+}
+input{
+    background-color: whitesmoke;
+    margin-bottom: 5%;
+}
+button{
+    padding-left: 5%;
+    padding-right: 5%;
+    font-size: 20px;
+}
+.form-control{
+    margin-bottom: 35px;
+    padding: 10px;
+}
+
+.import-form , .desc{
+    text-align: center;
+    font-family: 'Mitr', cursive;
+    padding: 20px;
+    margin: auto;
+    max-width: 700px;
+    font-size: 24px;
+}
+input#file.form-control{
+    height: auto;
+}
+
+.modal-body{
+    text-align: center;
+    font-family: 'Mitr', cursive;
+    padding: 10px;
+    margin: auto;
+    max-width: 700px;
+    font-size: 24px;
+}

@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Amaranth|Exo:700|Oleo+Script|Ubuntu:700');
+@import url('https://fonts.googleapis.com/css?family=Francois+One|Roboto:500,700');
+a, .nav-brand{
+    /* font-family: 'Amaranth', sans-serif; */
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+    margin: auto;
+    color: black;
+}
+img{
+    width: 70px;
+    height: 50px;
+    float: left;
+}
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover{
+    color: #2B5A9C;
+    background-color:#FFF0D4;
+}
+.navbar-default .navbar-nav>li>a{
+    color: black;
+}
+.navbar-default{
+    margin: 0px;
+    background-color:rgba(204, 204, 204, 0.705);
+}
+.container-fluid{
+    margin: 0;
+}
+.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand{
+    margin-left: 0;
+}
