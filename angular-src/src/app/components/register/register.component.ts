@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
      this.int.insertUser(this.dent).subscribe(
       response =>{
         if (response==true) {
-          this.flashMessage.show('User created successfully',{cssClass:'alert-success',timeout:3000});
+          this.flashMessage.show('User registered, waiting for admin activation.',{cssClass:'alert-success',timeout:5000});
           this.router.navigate(['/login']);
         } else {
           this.flashMessage.show('Error when trying to create user',{cssClass:'alert-danger',timeout:3000});

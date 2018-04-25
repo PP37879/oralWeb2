@@ -72,7 +72,8 @@ export class UsermanagementComponent implements OnInit {
     this.router.navigate(['/usermanagement']);
   }
   cancelEdit() {
-    this.router.navigate(['/menu']);
+    this.hide = true;
+    this.router.navigate(['/usermanagement']);
   }
   onSelect(newValue, index) {
     this.dentList[index].userType = newValue;

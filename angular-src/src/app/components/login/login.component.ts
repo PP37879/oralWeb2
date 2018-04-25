@@ -43,12 +43,16 @@ export class LoginComponent implements OnInit {
     } else {
       this.insertService.authenticateUser(user).subscribe(data => {
         if (data !== false) {
-          this.authenticateService.setCookie(user.username);
           this.userType = data;
-          console.log(this.userType);
-          this.authenticateService.setUserType(this.userType);
-          this.flashMessage.show("Welcome, "+user.username, { cssClass: 'alert-success', timeout: 3000 });
-          this.router.navigate(['/menu']);
+          if(this.userType !== 0){
+            this.authenticateService.setCookie(user.username);
+            this.authenticateService.setUserType(this.userType);
+            this.flashMessage.show("Welcome, "+user.username, { cssClass: 'alert-success', timeout: 3000 });
+            this.router.navigate(['/menu']);
+          }
+          else{
+            this.flashMessage.show('User not yet approved by admin', { cssClass: 'alert-danger', timeout: 3000 });
+          }
         } else {
           this.flashMessage.show('Incorrect username or password', { cssClass: 'alert-danger', timeout: 3000 });
         }
