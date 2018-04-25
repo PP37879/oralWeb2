@@ -24,6 +24,7 @@ import {AuthenticateService} from './services/authenticate.service';
 import {ValidateService} from './services/validate.service';
 import { InsertService } from './services/insert.service';
 import {AuthGuard} from './guards/auth.guard';
+import { UsermanagementComponent } from './components/usermanagement/usermanagement.component';
 
 const appRoutes : Routes = [
   {path : '' , component : HomeComponent},
@@ -33,7 +34,8 @@ const appRoutes : Routes = [
   {path : 'menu' , component : MenuComponent,canActivate:[AuthGuard]},
   {path : 'pdf' , component : PDFComponent,canActivate:[AuthGuard]},
   {path : 'excel' , component : ExcelComponent,canActivate:[AuthGuard]},
-  {path : 'file' , component : FileComponent,canActivate:[AuthGuard]}
+  {path : 'file' , component : FileComponent,canActivate:[AuthGuard]},
+  {path : 'usermanagement',component:UsermanagementComponent,canActivate:[AuthGuard]}
 ]
 
 @Component({
@@ -53,6 +55,7 @@ const appRoutes : Routes = [
     MenuComponent,
     NavbarComponent,
     FileComponent,
+    UsermanagementComponent
   ],
   imports: [
     BrowserModule,

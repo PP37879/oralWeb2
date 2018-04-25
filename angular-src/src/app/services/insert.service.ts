@@ -30,7 +30,29 @@ export class InsertService {
      }); ;
   }
 
+  updateUser(den:Dentist):Observable<boolean>{
+    let url = `https://oralhealthstatuscheck.com/updateUser.php`;
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url, den, header).map((res: Response) => { return this.parsein(res)}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
+  }
+
   parsein(res){
+    let data = res.json();
+    if (data.Error == "true") {
+      console.log(data.Error);
+      return false;
+    } else {
+      if(data === false){
+        return false;
+      }else
+      return true;
+    }
+  }
+
+  parseData(res){
     let data = res.json();
     if (data.Error == "true") {
       console.log(data.Error);
@@ -40,16 +62,22 @@ export class InsertService {
       if(data === false){
         return false;
       }else
-      return true;
+      return data;
     }
   }
 
   authenticateUser(dent){
     let url = Connect.getHostUrl()+'/login2.php';
     let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
-    return this.http.post(url, dent, header).map((res: Response) => { return this.parsein(res)}).catch((error: any) => { 
+    return this.http.post(url, dent, header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
       console.log(error);
       return  Observable.of(false) ;
      }); ;
   }
+
+  getData(){
+    let getUrl = `https://oralhealthstatuscheck.com/getUser.php`;
+    return this.http.get(getUrl).map((res) => { return res.json() });
+  }
+
 }

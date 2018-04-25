@@ -4,4 +4,5 @@ export class Dentist{
     firstname:string;
     lastname:string;
     email:string;
+    userType:number;
 }

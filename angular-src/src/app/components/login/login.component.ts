@@ -14,6 +14,8 @@ import {AuthenticateService} from '../../services/authenticate.service';
 export class LoginComponent implements OnInit {
   username: string;
   password: string;
+  userType : number;
+  keep : string;
   constructor(
     private insertService: InsertService,
     private router: Router,
@@ -40,9 +42,12 @@ export class LoginComponent implements OnInit {
       this.flashMessage.show('Please enter your username and password', { cssClass: 'alert-danger', timeout: 3000 });
     } else {
       this.insertService.authenticateUser(user).subscribe(data => {
-        if (data === true) {
+        if (data !== false) {
           this.authenticateService.setCookie(user.username);
-          this.flashMessage.show('User authenticated', { cssClass: 'alert-success', timeout: 3000 });
+          this.userType = data;
+          console.log(this.userType);
+          this.authenticateService.setUserType(this.userType);
+          this.flashMessage.show("Welcome, "+user.username, { cssClass: 'alert-success', timeout: 3000 });
           this.router.navigate(['/menu']);
         } else {
           this.flashMessage.show('Incorrect username or password', { cssClass: 'alert-danger', timeout: 3000 });

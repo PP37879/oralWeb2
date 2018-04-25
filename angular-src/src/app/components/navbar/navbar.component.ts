@@ -23,6 +23,10 @@ export class NavbarComponent implements OnInit {
     return this.authenticateService.loggedIn();
   }
 
+  checkAdmin(){
+    return this.authenticateService.isAdmin();
+  }
+
   onLogOutClick() {
       this.authenticateService.logOut();
       this.flashMessage.show('You have logout', { cssClass: 'alert-success', timeout: 3000 });

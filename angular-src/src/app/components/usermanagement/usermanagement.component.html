@@ -1,0 +1,43 @@
+<div class="container">
+  <h1 class="header">
+    Users List
+  </h1>
+  <table>
+    <tr>
+      <th>Username</th>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Email</th>
+      <th>UserType</th>
+    </tr>
+    <tr *ngFor="let dent of dentList;let i = index" [attr.data-index]="i">
+      <td>{{dent.username}}</td>
+      <td>{{dent.firstname}}</td>
+      <td>{{dent.lastname}}</td>
+      <td>{{dent.email}}</td>
+      <td *ngIf="hide">{{dent.userType}}</td>
+      <td *ngIf="!hide">
+        <select *ngIf="dent.userType === '0'" (change)="onSelect($event.target.value,i)">
+          <option value="0">Not Activated</option>
+          <option value="1">Admin</option>
+          <option value="2">Activated</option>
+        </select>
+        <select *ngIf="dent.userType === '1'" (change)="onSelect($event.target.value,i)">
+          <option value="1">Admin</option>
+          <option value="0">Not Activated</option>
+          <option value="2">Activated</option>
+        </select>
+        <select *ngIf="dent.userType === '2'" (change)="onSelect($event.target.value,i)">
+          <option value="2">Activated</option>
+          <option value="0">Not Activated</option>
+          <option value="1">Admin</option>
+        </select>
+      </td>
+    </tr>
+  </table>
+  <div class="forBtn" align="center">
+    <button *ngIf="!hide" type="submit" class="btn btn-success" (click)="saveEdit()">Save</button>
+    <button type="submit" class="btn btn-warning" (click)="clickEdit()">Edit</button>
+    <button type="submit" class="btn btn-danger" (click)="cancelEdit()">Cancel</button>
+  </div>
+</div>

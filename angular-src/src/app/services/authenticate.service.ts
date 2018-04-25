@@ -18,11 +18,20 @@ export class AuthenticateService {
     }
   }
 
+  isAdmin(){
+    if(this.cookieService.get("UserType") === "1"){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   getCookie() {
     return this.cookieService.get("User");
   }
   delCookie() {
     this.cookieService.remove("User");
+    this.cookieService.remove("UserType");
     console.log(this.getCookie());
   }
 
@@ -30,4 +39,10 @@ export class AuthenticateService {
     this.delCookie();
   }
 
+  setUserType(userType){
+    this.cookieService.put("UserType",userType);
+  }
+  getUserType(){
+    return this.cookieService.get("UserType");
+  }
 }

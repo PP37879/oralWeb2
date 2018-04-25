@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css?family=Amaranth|Delius+Unicase:700|Exo:700|Londrina+Solid|Mitr|Oleo+Script|Ubuntu:700|Vast+Shadow|Viga');
+@import url('https://fonts.googleapis.com/css?family=Francois+One|Open+Sans:800|Roboto:500,700');
+
+.header{
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 25px;
+    font-size: 40px;
+    text-shadow: 2px 2px #0000006b;
+}
+
+table{
+    font-family: 'Open Sans', sans-serif;
+    width: 100%;
+}
+
+th,td{
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+button{
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 5px 5px 3px rgba(128, 128, 128, 0.808);
+    border: 1px;
+    font-size: 17px;
+    border-radius: 10px;
+    font-size: 20px;
+    width: 20%;
+    margin:5%;
+}
+#saveBtn{
+    display: none;
+}
+tr:nth-child(odd){background-color: #f2f2f2;}
+tr:nth-child(even){background-color: #f2f2f2;}
+tr:hover {background-color: #ddd;}
