@@ -67,7 +67,7 @@ export class UsermanagementComponent implements OnInit {
           }
         });
     }
-    this.flashMessage.show('User updated', { cssClass: 'alert-success', timeout: 3000 });
+    this.flashMessage.show('User approval successful', { cssClass: 'alert-success', timeout: 3000 });
     this.hide = true;
     this.router.navigate(['/usermanagement']);
   }

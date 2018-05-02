@@ -15,15 +15,17 @@ table{
 }
 
 th,td{
-    border: 1px solid #ddd;
-    padding: 8px;
+    background-color: #F2F2F2;
+    border: 1px solid white;
+    padding: 10px;
+    box-shadow: 5px 5px 3px rgba(128, 128, 128, 0.808);
 }
 
 th{
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #4CAF50;
+    background-color: #5070B5;
     color: white;
 }
 button{

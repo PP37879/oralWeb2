@@ -80,4 +80,9 @@ export class InsertService {
     return this.http.get(getUrl).map((res) => { return res.json() });
   }
 
+  getUnapprovedUser(){
+    let getUserUrl = Connect.getHostUrl()+'/getunapproveduser.php';
+    return this.http.get(getUserUrl).map((res)=>{return res.json()});
+  }
+
 }

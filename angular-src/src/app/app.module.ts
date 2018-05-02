@@ -18,6 +18,7 @@ import { FileComponent } from './components/file/file.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlashMessagesModule} from 'angular2-flash-messages';
+import {SimpleNotificationsModule} from 'angular2-notifications';
 
 import {CookieService} from 'angular2-cookie/services/cookies.service';
 import {AuthenticateService} from './services/authenticate.service';
@@ -63,7 +64,8 @@ const appRoutes : Routes = [
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
-    FlashMessagesModule.forRoot()
+    FlashMessagesModule.forRoot(),
+    SimpleNotificationsModule.forRoot()
   ],
   providers: [
     InsertService,

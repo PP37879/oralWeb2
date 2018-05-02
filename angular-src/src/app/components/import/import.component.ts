@@ -29,6 +29,8 @@ export class ImportComponent {
   teacher:string;
   master:string;
   decay_num:string;
+  age:string;
+  classroom:string;
 
   std:Student;
 
@@ -58,6 +60,8 @@ export class ImportComponent {
     this.std.teacher = this.teacher;
     this.std.master = this.master;
     this.std.decay_num = this.decay_num;
+    this.std.age = this.age;
+    this.std.classroom = this.classroom;
 
     this.int.ins(this.std).subscribe(
       response =>{

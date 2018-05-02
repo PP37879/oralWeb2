@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'angular2-cookie/core';
+import {InsertService} from '../services/insert.service';
 
 @Injectable()
 export class AuthenticateService {
 
-  constructor(private cookieService : CookieService) {}
+  countDent : number;
+  day : number;
+
+  constructor(private cookieService : CookieService,
+             private insertService : InsertService) {}
 
   setCookie(username) {
-    this.cookieService.put("User", username);
+    this.day = Date.now()+1;
+    this.cookieService.put("User", username,{expires:this.day+""});
+    console.log(this.day);
   }
 
   loggedIn(){
@@ -45,4 +52,12 @@ export class AuthenticateService {
   getUserType(){
     return this.cookieService.get("UserType");
   }
+
+  getUnapprovedUser(){
+    this.insertService.getUnapprovedUser().subscribe(data =>{
+      this.countDent = data[0][0];
+    })
+    return this.countDent;
+  }
+
 }

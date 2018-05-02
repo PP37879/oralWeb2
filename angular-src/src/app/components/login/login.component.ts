@@ -12,6 +12,7 @@ import {AuthenticateService} from '../../services/authenticate.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  countDent : number;
   username: string;
   password: string;
   userType : number;
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.countDent = this.authenticateService.getUnapprovedUser();
   }
   onLoginSubmit() {
     const user = {
@@ -47,6 +49,11 @@ export class LoginComponent implements OnInit {
           if(this.userType !== 0){
             this.authenticateService.setCookie(user.username);
             this.authenticateService.setUserType(this.userType);
+            if(this.userType === 1){
+              if(this.authenticateService.getUnapprovedUser() > 0){
+                this.flashMessage.show("There are "+this.authenticateService.getUnapprovedUser()+" users waiting to be approved", { cssClass: 'alert-info',timeout:60000});
+              }
+            }
             this.flashMessage.show("Welcome, "+user.username, { cssClass: 'alert-success', timeout: 3000 });
             this.router.navigate(['/menu']);
           }

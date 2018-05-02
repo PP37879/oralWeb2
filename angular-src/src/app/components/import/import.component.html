@@ -5,7 +5,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-body">
-        <img src="assets/img/success.png" style="width:100px; height:100px;">
+        <img src="../../../assets/img/success.png" style="width:100px; height:100px;">
         <p>เพิ่มข้อมูลนักเรียน / ผู้ป่วยเรียบร้อย</p>
       </div>
     </div>
@@ -16,18 +16,18 @@
 <form class="import">
   <div class="import-form">
     <div class="input">
-      <h1 id="header">เพิ่มข้อมูลผู้ป่วย / นักเรียน</h1>
+      <h1 id="header">Add Patient/Student Information</h1>
       <input type="text" class="form-control" id="school_name" placeholder="ชื่อโรงเรียน" [(ngModel)]="school_name" name="schoolname">
       <input type="text" class="form-control" id="school_addr" placeholder="ที่ตั้งของโรงเรียน" [(ngModel)]="school_addr" name="school_addr">
       <input type="text" class="form-control" id="std_name" placeholder="ชื่อ-สกุลนักเรียน" [(ngModel)]="std_name" name="std_name">
-      <label>เพศ</label>
+      <label>Gender</label>
       <label class="radio-inline">
         <input type="radio" id="male" name="gender" [(ngModel)]="gender" value="male">&nbsp;&nbsp;ชาย</label>
       <label class="radio-inline">
         <input type="radio" id="female" name="gender" [(ngModel)]="gender" value="female">&nbsp;&nbsp;หญิง</label>
 
       <div>
-        <label style="margin-top:25px">วันเกิด</label>
+        <label style="margin-top:25px">Date of Birth</label>
         <input type="date" class="form-control" id="birth" placeholder="วันเกิด" name="dateOfBirth" [(ngModel)]="dateOfBirth">
       </div>
       <input type="text" class="form-control" id="std_addr" placeholder="ที่อยู่ของนักเรียน" name="std_addr" [(ngModel)]="std_addr">
@@ -37,7 +37,7 @@
       <input type="text" class="form-control" id="mom_name" placeholder="ชื่อ-สกุลมารดา" name="mom_name" [(ngModel)]="mom_name">
 
       <div class="form-group">
-        <label for="sel1">สถานภาพของบิดา
+        <label for="sel1">Father's Status
         </label>
         <select class="form-control" id="sel1" name="dad_status" [(ngModel)]="dad_status">
           <option value="มีชีวิตอยู่">มีชีวิตอยู่</option>
@@ -45,7 +45,7 @@
           <option value="ถึงแก่กรรม">ถึงแก่กรรม</option>
         </select>
 
-        <label for="sel2">สถานภาพของมารดา
+        <label for="sel2">Mother's Status
         </label>
         <select class="form-control" id="sel2" name="mom_status" [(ngModel)]="mom_status"> 
           <option value="มีชีวิตอยู่">มีชีวิตอยู่</option>
@@ -60,9 +60,11 @@
       <input type="text" class="form-control" id="parent_addr" placeholder="ที่อยู่ของผู้ปกครอง" name="parent_addr" [(ngModel)]="parent_addr">
       <input type="text" class="form-control" id="teacher" placeholder="ชื่อครูประจำชั้น" name="teacher" [(ngModel)]="teacher">
       <input type="text" class="form-control" id="master" placeholder="ชื่อผู้อำนวยการของโรงเรียน" name="master" [(ngModel)]="master">
-      <input type="number" class="form-control" id="decay_num" placeholder="จำนวนฟันผุที่ตรวจพบในครั้งนี้" name="decay_num" [(ngModel)]="decay_num">
+      <input type="number" class="form-control" id="decay_num" placeholder="จำนวนฟันผุที่ตรวจพบล่าสุด" name="decay_num" [(ngModel)]="decay_num">
+      <input type="hidden" class="form-control" id="age" placeholder="age" name="age" [(ngModel)]="age">
+      <input type="text" class="form-control" id="classroom" placeholder="ห้องเรียน" name="classroom" [(ngModel)]="classroom">
       <div class="forBtn">
-        <button type="submit" class="btn btn-success" (click)="add()" data-toggle="modal" data-target="#myModal" id="importSubmit" onclick="showModal()">เสร็จสิ้น</button>
+        <button type="submit" class="btn btn-success" (click)="add()" data-toggle="modal" data-target="#myModal" id="importSubmit" onclick="showModal()">Add Information</button>
       </div>
     </div>
   </div>

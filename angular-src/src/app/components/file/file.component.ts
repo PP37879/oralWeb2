@@ -10,6 +10,7 @@ import * as XLSX from 'ts-xlsx';
   templateUrl: './file.component.html',
   styleUrls: ['./file.component.css']
 })
+
 export class FileComponent implements OnInit {
   school_name: string;
   school_addr:string;
@@ -31,6 +32,8 @@ export class FileComponent implements OnInit {
   teacher:string;
   master:string;
   decay_num:string;
+  age:string;
+  classroom:string;
 
   arrayBuffer: any;
   file: File;
@@ -89,8 +92,10 @@ export class FileComponent implements OnInit {
           this.teacher = worksheetArray[row][17];
           this.master = worksheetArray[row][18];
           this.decay_num = worksheetArray[row][19];
+          this.age = worksheetArray[row][20];
+          this.classroom = worksheetArray[row][21];
 
-          console.log(this.decay_num);
+          // con/sole.log(this.decay_num);
           this.add();
         // }
         
@@ -143,6 +148,9 @@ export class FileComponent implements OnInit {
     this.std.teacher = this.teacher;
     this.std.master = this.master;
     this.std.decay_num = this.decay_num;
+    this.std.age = this.age;
+    this.std.classroom = this.classroom;
+    
     this.int.ins(this.std).subscribe(
       response => {
         if (response == true) {
@@ -159,7 +167,13 @@ export class FileComponent implements OnInit {
 
 
   ngOnInit() {
-
+    // this.dataService.convertExcelToJson().subscribe(inputfile => {
+    //   this.file = inputfile.file;
+    //   console.log(this.file);
+    // }, err => {
+    //   console.log(err);
+    //   return false;
+    // });
   }
 
 

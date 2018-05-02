@@ -20,5 +20,7 @@ export class Student {
     teacher:string;
     master:string;
     decay_num:string;
+    age:string;
+    classroom:string;
   
 }

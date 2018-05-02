@@ -5,16 +5,16 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-body">
-          <img src="assets/img/success.png" style="width:100px; height:100px;">
-          <p>เพิ่มข้อมูลนักเรียน / ผู้ป่วยเรียบร้อย</p>
+          <img src="../../../assets/img/success.png" style="width:100px; height:100px;">
+          <p>Patient/Student Information added successfully</p>
         </div>
       </div>
   
     </div>
   </div>
 
-<div class="desc">เลือกไฟล์ที่ต้องการนำเข้าข้อมูล</div>
-<div class="desc">ไฟล์ต้องมีสกุลไฟล์เป็น .xlsx เท่านั้น</div>
+<div class="desc">Select the file you wish to import data</div>
+<div class="desc">The file extension must be .xlsx only</div>
 <div class="import-form">
     <input type="file" (change)="incomingfile($event)" />
     <button type="submit" class="btn btn-success" (click)="Upload()" data-toggle="modal" data-target="#myModal" id="importSubmit" onclick="showModal()">OK</button>

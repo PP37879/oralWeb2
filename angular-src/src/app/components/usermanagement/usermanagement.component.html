@@ -18,6 +18,7 @@
       <td *ngIf="hide">{{dent.userType}}</td>
       <td *ngIf="!hide">
         <select (change)="onSelect($event.target.value,i)">
+          <option value="0">None</option>
           <option value="1">Admin</option>
           <option value="2">Normal User</option>
         </select>
