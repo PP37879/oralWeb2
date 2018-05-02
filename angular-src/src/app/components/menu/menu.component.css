@@ -25,7 +25,9 @@ button{
     border: 1px ;
     border-radius:10px;
 }
-
+button:hover{
+    background-color: #FAFAFA;
+}
 .btn{
     font-size:3.3em;
     display:block;
