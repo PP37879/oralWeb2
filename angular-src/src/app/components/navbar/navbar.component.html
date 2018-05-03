@@ -20,6 +20,10 @@
           <a [routerLink]="['/menu']">
             Menu</a>
         </li>
+        <li *ngIf="checkLoggedIn()" [routerLinkActive]="['active']">
+            <a [routerLink]="['/edit']">
+              {{getLoggedInUser()}}</a>
+          </li>
       <li *ngIf="checkLoggedIn() && checkAdmin()"[routerLinkActive]="['active']">
         <a [routerLink]="['/usermanagement']" [routerLinkActive]="['active']">Users Management</a>
       </li>

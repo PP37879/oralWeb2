@@ -15,6 +15,7 @@ import { ImportComponent } from './components/import/import.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FileComponent } from './components/file/file.component';
+import {EditComponent} from './components/edit/edit.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlashMessagesModule} from 'angular2-flash-messages';
@@ -36,7 +37,8 @@ const appRoutes : Routes = [
   {path : 'pdf' , component : PDFComponent,canActivate:[AuthGuard]},
   {path : 'excel' , component : ExcelComponent,canActivate:[AuthGuard]},
   {path : 'file' , component : FileComponent,canActivate:[AuthGuard]},
-  {path : 'usermanagement',component:UsermanagementComponent,canActivate:[AuthGuard]}
+  {path : 'usermanagement',component:UsermanagementComponent,canActivate:[AuthGuard]},
+  {path : 'edit',component:EditComponent,canActivate:[AuthGuard]},
 ]
 
 @Component({
@@ -56,7 +58,8 @@ const appRoutes : Routes = [
     MenuComponent,
     NavbarComponent,
     FileComponent,
-    UsermanagementComponent
+    UsermanagementComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,

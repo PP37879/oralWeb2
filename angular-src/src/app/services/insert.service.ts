@@ -76,13 +76,31 @@ export class InsertService {
   }
 
   getData(){
-    let getUrl = `https://oralhealthstatuscheck.com/getUser.php`;
+    let getUrl = `https://oralhealthstatuscheck.com/getunapprovelist.php`;
     return this.http.get(getUrl).map((res) => { return res.json() });
   }
 
   getUnapprovedUser(){
     let getUserUrl = Connect.getHostUrl()+'/getunapproveduser.php';
     return this.http.get(getUserUrl).map((res)=>{return res.json()});
+  }
+
+  getUserForUpdate(dent){
+    let url = Connect.getHostUrl()+'/getuser.php';
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url, dent, header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
+  }
+
+  updateInfo(den:Dentist):Observable<boolean>{
+    let url = Connect.getHostUrl()+'/updateinfo.php';
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url, den, header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
   }
 
 }

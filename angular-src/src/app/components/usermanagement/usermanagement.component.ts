@@ -69,7 +69,7 @@ export class UsermanagementComponent implements OnInit {
     }
     this.flashMessage.show('User approval successful', { cssClass: 'alert-success', timeout: 3000 });
     this.hide = true;
-    this.router.navigate(['/usermanagement']);
+    this.router.navigate(['/menu']);
   }
   cancelEdit() {
     this.hide = true;
