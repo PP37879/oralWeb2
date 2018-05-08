@@ -1,39 +1,30 @@
 <div class="pdf-form">
   <div>
     <label style="margin-top:25px">Select Date</label>
-    <input type="date" class="form-control" id="date" placeholder="วันเกิด">
+    <input type="date" class="form-control" id="date" placeholder="Analysis Date" [(ngModel)]="selectedDate" (change)="onSelect($event.target.value)">
   </div>
   <div class="form-group">
     <label for="sel0">School
     </label>
-    <select class="form-control" id="sel0">
-      <option>อนุบาลแห่งมหาวิทยาลัยธรรมศาสตร์</option>
-      <option>อนุบาลปทุมธานี</option>
-      <option>ประถมศึกษาแห่งมหาวิทยาลัยธรรมศาสตร์</option>
+    <select class="form-control" id="sel0" [(ngModel)]="selectedSchool" (change)="onSelectSchool($event.target.value)">
+     <option value="{{school}}" *ngFor="let school of schoolList">{{school}}</option>
     </select>
-
-    <label for="school">Classroom
+    <label for="class">Classroom
     </label>
-    <select class="form-control" id="school">
-      <option>ป.2/1</option>
-      <option>ป.2/2</option>
-      <option>ป.2/3</option>
+    <select class="form-control" id="class" [(ngModel)]="selectedClass" (change)="onSelectClass($event.target.value)">
+        <option value="{{school}}" *ngFor="let class of classroomList">{{class}}</option>
     </select>
 
     <label for="sel1">Student/Patient ID
     </label>
-    <select class="form-control" id="sel1">
-      <option>2301610001</option>
-      <option>2301610002</option>
-      <option>2301610003</option>
+    <select class="form-control" id="sel1" [(ngModel)]="selectedIdFrom" (change)="onSelectFrom($event.target.value)">
+        <option value="{{school}}" *ngFor="let idFrom of studentIdFrom">{{idFrom}}</option>
     </select>
 
     <label for="sel2">To
     </label>
-    <select class="form-control" id="sel2">
-      <option>2301610001</option>
-      <option>2301610002</option>
-      <option>2301610003</option>
+    <select class="form-control" id="sel2" [(ngModel)]="selectedIdTo" (change)="onSelectTo($event.target.value)">
+        <option value="{{school}}" *ngFor="let idTo of studentIdTo">{{idTo}}</option>
     </select>
 
     <label for="ckeckbox" style="margin-top:25px">Select Document Type</label>
@@ -55,6 +46,6 @@
   </div>
 
   <div class="forBtn" style="margin-top:35px">
-    <button type="submit" class="btn btn-success" onclick="chooseFile()">Download</button>
+    <button type="submit" class="btn btn-success" (click)="downloadDocument()">Download</button>
   </div>
 </div>

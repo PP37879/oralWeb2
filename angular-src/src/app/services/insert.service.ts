@@ -102,5 +102,13 @@ export class InsertService {
       return  Observable.of(false) ;
      }); ;
   }
+  getDataFromDate(selectedDate){
+    let url = Connect.getHostUrl()+'/selectdate.php';
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url,selectedDate, header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
+  }
 
 }
