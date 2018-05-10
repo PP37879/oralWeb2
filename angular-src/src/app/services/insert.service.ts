@@ -25,7 +25,7 @@ export class InsertService {
     let url =Connect.getHostUrl()+'/int.php';
     let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }) };
     return this.http.post(url, user, header).map((res: Response) => { return this.parsein(res)}).catch((error: any) => { 
-      console.log("error");
+      console.log(error);
       return  Observable.of(false) ;
      }); ;
   }
@@ -82,6 +82,11 @@ export class InsertService {
 
   getUnapprovedUser(){
     let getUserUrl = Connect.getHostUrl()+'/getunapproveduser.php';
+    return this.http.get(getUserUrl).map((res)=>{return res.json()});
+  }
+
+  getUnAnalyzeResult(){
+    let getUserUrl = Connect.getHostUrl()+'/getunanalyzeresult.php';
     return this.http.get(getUserUrl).map((res)=>{return res.json()});
   }
 

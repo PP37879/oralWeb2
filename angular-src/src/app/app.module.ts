@@ -16,6 +16,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FileComponent } from './components/file/file.component';
 import {EditComponent} from './components/edit/edit.component';
+import {DevelopmentComponent} from './components/development/development.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlashMessagesModule} from 'angular2-flash-messages';
@@ -25,6 +26,7 @@ import {CookieService} from 'angular2-cookie/services/cookies.service';
 import {AuthenticateService} from './services/authenticate.service';
 import {ValidateService} from './services/validate.service';
 import { InsertService } from './services/insert.service';
+import {AnalysisService} from './services/analysis.service';
 import {AuthGuard} from './guards/auth.guard';
 import { UsermanagementComponent } from './components/usermanagement/usermanagement.component';
 

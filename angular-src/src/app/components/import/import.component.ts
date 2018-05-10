@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { InsertService } from '../../services/insert.service';
 import { Student  } from '../../model/student';
+import { DatePipe } from '@angular/common';
+import {Pipe, PipeTransform} from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-import',
@@ -14,6 +17,7 @@ export class ImportComponent {
   std_name:string;
   gender:string;
   dateOfBirth:string;
+  dob:Date;
   std_addr:string;
   nation:string;
   religion:string;
@@ -34,10 +38,15 @@ export class ImportComponent {
 
   std:Student;
 
-  constructor(private int:InsertService) {
+  constructor(private int:InsertService,
+              private datePipe : DatePipe) {
     this.std=new Student();
    }
 
+   onSelect(dateOfBirth){
+     this.dob = dateOfBirth;
+     this.dateOfBirth = this.datePipe.transform(this.dob, 'yyyy/MM/dd');
+   }
 
   add(){
     this.std.school_name = this.school_name;
@@ -59,8 +68,7 @@ export class ImportComponent {
     this.std.parent_addr = this.parent_addr;
     this.std.teacher = this.teacher;
     this.std.master = this.master;
-    this.std.decay_num = this.decay_num;
-    this.std.age = this.age;
+    this.std.age = +moment().diff(this.dob,'year')+"";
     this.std.classroom = this.classroom;
 
     this.int.ins(this.std).subscribe(

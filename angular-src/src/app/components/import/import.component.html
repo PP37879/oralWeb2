@@ -16,7 +16,7 @@
 <form class="import">
   <div class="import-form">
     <div class="input">
-      <h1 id="header">Add Patient/Student Information</h1>
+      <h1 id="header">Student Information</h1>
       <input type="text" class="form-control" id="school_name" placeholder="ชื่อโรงเรียน" [(ngModel)]="school_name" name="schoolname">
       <input type="text" class="form-control" id="school_addr" placeholder="ที่ตั้งของโรงเรียน" [(ngModel)]="school_addr" name="school_addr">
       <input type="text" class="form-control" id="std_name" placeholder="ชื่อ-สกุลนักเรียน" [(ngModel)]="std_name" name="std_name">
@@ -28,7 +28,7 @@
 
       <div>
         <label style="margin-top:25px">Date of Birth</label>
-        <input type="date" class="form-control" id="birth" placeholder="วันเกิด" name="dateOfBirth" [(ngModel)]="dateOfBirth">
+        <input type="date" class="form-control" id="birth" placeholder="วันเกิด" name="dateOfBirth" [(ngModel)]="dob" (change)="onSelect($event.target.value)">
       </div>
       <input type="text" class="form-control" id="std_addr" placeholder="ที่อยู่ของนักเรียน" name="std_addr" [(ngModel)]="std_addr">
       <input type="text" class="form-control" id="nation" placeholder="สัญชาติ" name="nation" [(ngModel)]="nation">
@@ -60,8 +60,6 @@
       <input type="text" class="form-control" id="parent_addr" placeholder="ที่อยู่ของผู้ปกครอง" name="parent_addr" [(ngModel)]="parent_addr">
       <input type="text" class="form-control" id="teacher" placeholder="ชื่อครูประจำชั้น" name="teacher" [(ngModel)]="teacher">
       <input type="text" class="form-control" id="master" placeholder="ชื่อผู้อำนวยการของโรงเรียน" name="master" [(ngModel)]="master">
-      <input type="number" class="form-control" id="decay_num" placeholder="จำนวนฟันผุที่ตรวจพบล่าสุด" name="decay_num" [(ngModel)]="decay_num">
-      <input type="hidden" class="form-control" id="age" placeholder="age" name="age" [(ngModel)]="age">
       <input type="text" class="form-control" id="classroom" placeholder="ห้องเรียน" name="classroom" [(ngModel)]="classroom">
       <div class="forBtn">
         <button type="submit" class="btn btn-success" (click)="add()" data-toggle="modal" data-target="#myModal" id="importSubmit" onclick="showModal()">Add Information</button>

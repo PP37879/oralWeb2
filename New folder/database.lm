@@ -1,0 +1,161 @@
+Language model created by QuickLM on Thu Apr 26 05:52:56 EDT 2018
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 34 sentences and 36 words
+
+\data\
+ngram 1=36
+ngram 2=68
+ngram 3=34
+
+\1-grams:
+-0.7782 </s> -0.3010
+-0.7782 <s> -0.2218
+-2.3096 ALFA -0.2218
+-2.3096 AOOD -0.2218
+-2.3096 AOODLAEWPHU -0.2218
+-2.3096 BRAVO -0.2218
+-2.3096 CARIES -0.2218
+-2.3096 CHARLIE -0.2218
+-2.3096 CROWN -0.2218
+-2.3096 DEEMHOD -0.2218
+-2.3096 DELTA -0.2218
+-2.3096 ECHO -0.2218
+-2.3096 FOXTROT -0.2218
+-2.3096 GAEKHAI -0.2218
+-2.3096 GAO -0.2218
+-2.3096 GLUB -0.2218
+-2.3096 GOLF -0.2218
+-2.3096 HA -0.2218
+-2.3096 HOK -0.2218
+-2.3096 JED -0.2218
+-2.3096 KROB -0.2218
+-2.3096 KROBFUN -0.2218
+-2.3096 MAIPOO -0.2218
+-2.3096 MISSING -0.2218
+-2.3096 NUENG -0.2218
+-2.3096 PAED -0.2218
+-2.3096 POO -0.2218
+-2.3096 RERM -0.2218
+-2.3096 SAAM -0.2218
+-2.3096 SEALANT -0.2218
+-2.3096 SED -0.2218
+-2.3096 SEE -0.2218
+-2.3096 SONG -0.2218
+-2.3096 SOON -0.2218
+-2.3096 SOUND -0.2218
+-2.3096 YOUNGMAIKUEN -0.2218
+
+\2-grams:
+-1.8325 <s> ALFA 0.0000
+-1.8325 <s> AOOD 0.0000
+-1.8325 <s> AOODLAEWPHU 0.0000
+-1.8325 <s> BRAVO 0.0000
+-1.8325 <s> CARIES 0.0000
+-1.8325 <s> CHARLIE 0.0000
+-1.8325 <s> CROWN 0.0000
+-1.8325 <s> DEEMHOD 0.0000
+-1.8325 <s> DELTA 0.0000
+-1.8325 <s> ECHO 0.0000
+-1.8325 <s> FOXTROT 0.0000
+-1.8325 <s> GAEKHAI 0.0000
+-1.8325 <s> GAO 0.0000
+-1.8325 <s> GLUB 0.0000
+-1.8325 <s> GOLF 0.0000
+-1.8325 <s> HA 0.0000
+-1.8325 <s> HOK 0.0000
+-1.8325 <s> JED 0.0000
+-1.8325 <s> KROB 0.0000
+-1.8325 <s> KROBFUN 0.0000
+-1.8325 <s> MAIPOO 0.0000
+-1.8325 <s> MISSING 0.0000
+-1.8325 <s> NUENG 0.0000
+-1.8325 <s> PAED 0.0000
+-1.8325 <s> POO 0.0000
+-1.8325 <s> RERM 0.0000
+-1.8325 <s> SAAM 0.0000
+-1.8325 <s> SEALANT 0.0000
+-1.8325 <s> SED 0.0000
+-1.8325 <s> SEE 0.0000
+-1.8325 <s> SONG 0.0000
+-1.8325 <s> SOON 0.0000
+-1.8325 <s> SOUND 0.0000
+-1.8325 <s> YOUNGMAIKUEN 0.0000
+-0.3010 ALFA </s> -0.3010
+-0.3010 AOOD </s> -0.3010
+-0.3010 AOODLAEWPHU </s> -0.3010
+-0.3010 BRAVO </s> -0.3010
+-0.3010 CARIES </s> -0.3010
+-0.3010 CHARLIE </s> -0.3010
+-0.3010 CROWN </s> -0.3010
+-0.3010 DEEMHOD </s> -0.3010
+-0.3010 DELTA </s> -0.3010
+-0.3010 ECHO </s> -0.3010
+-0.3010 FOXTROT </s> -0.3010
+-0.3010 GAEKHAI </s> -0.3010
+-0.3010 GAO </s> -0.3010
+-0.3010 GLUB </s> -0.3010
+-0.3010 GOLF </s> -0.3010
+-0.3010 HA </s> -0.3010
+-0.3010 HOK </s> -0.3010
+-0.3010 JED </s> -0.3010
+-0.3010 KROB </s> -0.3010
+-0.3010 KROBFUN </s> -0.3010
+-0.3010 MAIPOO </s> -0.3010
+-0.3010 MISSING </s> -0.3010
+-0.3010 NUENG </s> -0.3010
+-0.3010 PAED </s> -0.3010
+-0.3010 POO </s> -0.3010
+-0.3010 RERM </s> -0.3010
+-0.3010 SAAM </s> -0.3010
+-0.3010 SEALANT </s> -0.3010
+-0.3010 SED </s> -0.3010
+-0.3010 SEE </s> -0.3010
+-0.3010 SONG </s> -0.3010
+-0.3010 SOON </s> -0.3010
+-0.3010 SOUND </s> -0.3010
+-0.3010 YOUNGMAIKUEN </s> -0.3010
+
+\3-grams:
+-0.3010 <s> ALFA </s>
+-0.3010 <s> AOOD </s>
+-0.3010 <s> AOODLAEWPHU </s>
+-0.3010 <s> BRAVO </s>
+-0.3010 <s> CARIES </s>
+-0.3010 <s> CHARLIE </s>
+-0.3010 <s> CROWN </s>
+-0.3010 <s> DEEMHOD </s>
+-0.3010 <s> DELTA </s>
+-0.3010 <s> ECHO </s>
+-0.3010 <s> FOXTROT </s>
+-0.3010 <s> GAEKHAI </s>
+-0.3010 <s> GAO </s>
+-0.3010 <s> GLUB </s>
+-0.3010 <s> GOLF </s>
+-0.3010 <s> HA </s>
+-0.3010 <s> HOK </s>
+-0.3010 <s> JED </s>
+-0.3010 <s> KROB </s>
+-0.3010 <s> KROBFUN </s>
+-0.3010 <s> MAIPOO </s>
+-0.3010 <s> MISSING </s>
+-0.3010 <s> NUENG </s>
+-0.3010 <s> PAED </s>
+-0.3010 <s> POO </s>
+-0.3010 <s> RERM </s>
+-0.3010 <s> SAAM </s>
+-0.3010 <s> SEALANT </s>
+-0.3010 <s> SED </s>
+-0.3010 <s> SEE </s>
+-0.3010 <s> SONG </s>
+-0.3010 <s> SOON </s>
+-0.3010 <s> SOUND </s>
+-0.3010 <s> YOUNGMAIKUEN </s>
+
+\end\
