@@ -41,6 +41,8 @@ const appRoutes : Routes = [
   {path : 'file' , component : FileComponent,canActivate:[AuthGuard]},
   {path : 'usermanagement',component:UsermanagementComponent,canActivate:[AuthGuard]},
   {path : 'edit',component:EditComponent,canActivate:[AuthGuard]},
+  {path : 'development',component:DevelopmentComponent,canActivate:[AuthGuard]},
+
 ]
 
 @Component({
@@ -61,7 +63,8 @@ const appRoutes : Routes = [
     NavbarComponent,
     FileComponent,
     UsermanagementComponent,
-    EditComponent
+    EditComponent,
+    DevelopmentComponent
   ],
   imports: [
     BrowserModule,

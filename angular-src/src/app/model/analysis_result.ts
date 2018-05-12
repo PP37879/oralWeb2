@@ -1,12 +1,14 @@
 export class AnalysisResult{
     analysisID : number;
     analyzeDate : Date;
+    analyzeDateString : string;
     analyzeSchool : string;
     analyzeSchoolRoom : string;
     analyzeStudentID : number;
     analyzeDentUsername : string;
-    analyzeDMFT : number;
+    analyzeMilkDMFT : number;
+    analyzePermanentDMFT : number;
     groupType : string;
     gender : string;
-    analyze_status : number;
+    analyzeStudentName : string;
 }

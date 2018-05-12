@@ -1,3 +1,54 @@
-<p>
-  development works!
-</p>
+<form class="selectForm">
+  <h1 id="header">Oral Health Status Chart</h1>
+  <div class="typeSelection">
+    <h2 id="selectorHeader">Select Chart Type</h2>
+    <select class="form-control" id="type" [(ngModel)]="type" (change)="onSelectType($event.target.value)">
+      <option value="individual">Individual</option>
+      <option value="classroom">Classroom</option>
+      <option value="school">School</option>
+    </select>
+  </div>
+  <div class="inputIndividual" *ngIf="!hideIndividual">
+    <h2 id="smallHeader">Individual Oral Health Status Chart</h2>
+    <label>Select School</label>
+    <select class="form-control" id="school" [(ngModel)]="selectedSchool" (change)="onSelectSchool($event.target.value)">
+      <option value="{{school}}" *ngFor="let school of schoolList">{{school}}</option>
+    </select>
+    <label>Select Classroom</label>
+    <select class="form-control" id="classroom" [(ngModel)]="selectedClass" (change)="onSelectClass($event.target.value)">
+      <option value="{{class}}" *ngFor="let class of classList">{{class}}</option>
+    </select>
+    <label>Select Student ID</label>
+    <select class="form-control" id="studentID" [(ngModel)]="selectedID" (change)="onSelectID($event.target.value)">
+      <option value="{{id}}" *ngFor="let id of idList">{{id}}</option>
+    </select>
+    <div class="forBtn">
+      <button type="submit" class="btn btn-success" (click)="showChart()">OK</button>
+    </div>
+  </div>
+  <div class="inputClassroom" *ngIf="!hideClassroom">
+      <h2 id="smallHeader">School Oral Health Status Chart</h2>
+      <label>Select School</label>
+      <select class="form-control" id="school" [(ngModel)]="selectedSchool" (change)="onSelectSchool($event.target.value)">
+        <option value="{{school}}" *ngFor="let school of schoolList">{{school}}</option>
+      </select>
+      <label>Select Classroom</label>
+      <select class="form-control" id="classroom" [(ngModel)]="selectedClass" (change)="onSelectClass($event.target.value)">
+        <option value="{{class}}" *ngFor="let class of classList">{{class}}</option>
+      </select>
+      <div class="forBtn">
+        <button type="submit" class="btn btn-success" (click)="showChart()">OK</button>
+      </div>
+    </div>
+  <div class="inputSchool" *ngIf="!hideSchool">
+    <h2 id="smallHeader">School Oral Health Status Chart</h2>
+    <label>Select School</label>
+    <select class="form-control" id="school" [(ngModel)]="selectedSchool" (change)="onSelectSchool($event.target.value)">
+      <option value="{{school}}" *ngFor="let school of schoolList">{{school}}</option>
+    </select>
+    <div class="forBtn">
+      <button type="submit" class="btn btn-success" (click)="showChart()">OK</button>
+    </div>
+  </div>
+  
+</form>

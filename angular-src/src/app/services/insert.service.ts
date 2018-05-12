@@ -8,6 +8,8 @@ import { Observable } from 'rxjs/Rx';
 import {Connect} from '../model/connect';
 import {Dentist} from '../model/dentist';
 import {Student} from '../model/student';
+import {AnalysisResult} from '../model/analysis_result';
+import { RecordResult } from '../model/record_result';
 
 @Injectable()
 export class InsertService {
@@ -115,5 +117,46 @@ export class InsertService {
       return  Observable.of(false) ;
      }); ;
   }
+
+  getAnalyzeDataList(){
+    let url = Connect.getHostUrl()+'/getDataReadyForChart.php';
+    return this.http.get(url).map((res)=>{return res.json()});
+  }
+
+  insertAnalysisResult(analysisResult:AnalysisResult){
+    let url = Connect.getHostUrl()+'/createanalysis.php';
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url, analysisResult, header).map((res: Response) => { return this.parsein(res)}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
+  }
+
+  updateStatus(recordResult : RecordResult){
+    let url = Connect.getHostUrl()+'/updateAnalysisStatus.php';
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url, recordResult, header).map((res: Response) => { return this.parsein(res)}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
+  }
+
+  getChartData(information){
+    let url = Connect.getHostUrl()+'/getdataforchart.php';
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url,information, header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
+  }
+
+  // getDataFromSchool(){
+  //   let url = Connect.getHostUrl()+'/getdataforchart.php';
+  //   let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+  //   return this.http.post(url,header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
+  //     console.log(error);
+  //     return  Observable.of(false) ;
+  //    }); ;
+  // }
 
 }

@@ -6,4 +6,7 @@ export class RecordResult{
     recordDate : Date;
     dentistUsername : string;
     analyzeStat : number;
+    schoolName : string;
+    classroom : string;
+    gender : string;
 }

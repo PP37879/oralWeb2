@@ -11,6 +11,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { RecordResult } from '../../model/record_result';
 import { Student } from '../../model/student';
 import { AnalysisResult } from '../../model/analysis_result';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-menu',
@@ -35,7 +36,9 @@ export class MenuComponent implements OnInit {
   countPermanentF: number;
   countPermanentM: number;
   countPermanentDMFT: number;
-  constructor(private insert: InsertService) { }
+  stringDate : string;
+  constructor(private insert: InsertService,
+              private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.recordResultList = [];
@@ -45,23 +48,29 @@ export class MenuComponent implements OnInit {
 
   getUnAnalyzeResult() {
     this.insert.getUnAnalyzeResult().subscribe(data => {
-      for (var i = 0; i < data.length; i++) {
-        this.recordResult = new RecordResult();
-        this.teethBuffer = [];
-        this.recordResult.resultID = data[i][0];
-        this.recordResult.studentID = data[i][1];
-        this.recordResult.studentName = data[i][2];
-        for (var j = 3; j < 35; j++) {
-          this.teethBuffer.push(data[i][j]);
+      if(data !== null) {
+        for (var i = 0; i < data.length; i++) {
+          this.recordResult = new RecordResult();
+          this.teethBuffer = [];
+          this.recordResult.resultID = data[i][0];
+          this.recordResult.studentID = data[i][1];
+          this.recordResult.studentName = data[i][2];
+          for (var j = 3; j < 35; j++) {
+            this.teethBuffer.push(data[i][j]);
+          }
+          this.recordResult.teeth = this.teethBuffer;
+          this.recordResult.recordDate = data[i][35];
+          console.log(this.recordResult.recordDate);
+          this.recordResult.dentistUsername = data[i][36];
+          this.recordResult.analyzeStat = data[i][37];
+          this.recordResult.schoolName = data[i][38];
+          this.recordResult.classroom = data[i][39];
+          this.recordResult.gender = data[i][40];
+          this.recordResultList.push(this.recordResult);
+          console.log(this.recordResultList[i]);
         }
-        this.recordResult.teeth = this.teethBuffer;
-        this.recordResult.recordDate = data[i][35];
-        this.recordResult.dentistUsername = data[i][36];
-        this.recordResult.analyzeStat = data[i][37];
-        this.recordResultList.push(this.recordResult);
-        console.log(this.recordResultList[i]);
+        this.calculateDMFT(this.recordResultList);
       }
-      this.calculateDMFT(this.recordResultList);
     })
   }
 
@@ -72,6 +81,10 @@ export class MenuComponent implements OnInit {
       this.analysisResult.analyzeDate = this.recordResultList[i].recordDate;
       this.analysisResult.analyzeDentUsername = this.recordResultList[i].dentistUsername;
       this.analysisResult.analyzeStudentID = this.recordResultList[i].studentID;
+      this.analysisResult.analyzeSchool = this.recordResultList[i].schoolName;
+      this.analysisResult.analyzeStudentName = this.recordResultList[i].studentName;
+      this.analysisResult.analyzeSchoolRoom = this.recordResultList[i].classroom;
+      this.analysisResult.gender = this.recordResultList[i].gender;
       this.countNormalMilkTeeth = 0;
       this.countMilkD = 0;
       this.countMilkF = 0;
@@ -107,20 +120,25 @@ export class MenuComponent implements OnInit {
       this.countMilkDMFT = this.countMilkD + this.countMilkF + this.countMilkM;
       this.countPermanentDMFT = this.countPermanentD + this.countPermanentF + this.countPermanentM;
       //Use MILKDMFT as DMFT for temporary only 
-      this.analysisResult.analyzeDMFT = this.countMilkDMFT;
+      this.analysisResult.analyzeMilkDMFT = this.countMilkDMFT;
+      this.analysisResult.analyzePermanentDMFT = this.countPermanentDMFT;
       this.analysisResultList.push(this.analysisResult);
-      console.log("d " + this.countMilkD);
-      console.log("f " + this.countMilkF);
-      console.log("m " + this.countMilkM);
-      console.log("dmft " + this.countMilkDMFT);
-      console.log("D " + this.countPermanentD);
-      console.log("F " + this.countPermanentF);
-      console.log("M " + this.countPermanentM);
-      console.log("DMFT " + this.countPermanentDMFT);
-      console.log("normal " + this.countNormalMilkTeeth);
-      console.log("Normal " + this.countNormalPermanentTeeth);
       console.log(this.analysisResultList[i]);
+      this.recordResultList[i].analyzeStat = 1;
+      this.insert.updateStatus(this.recordResultList[i]).subscribe(res=>{
+        console.log(res);
+      });
     }
+    this.createAnalysisResult(this.analysisResultList);
   }
 
+  createAnalysisResult(analysisResultList: AnalysisResult[]) {
+    for (var i = 0; i < analysisResultList.length; i++) {
+      this.insert.insertAnalysisResult(analysisResultList[i]).subscribe(response => {
+        if(response === true){
+          console.log("Analysis Report generated"+i+" time");
+        }
+      });
+    }
+  }
 }
