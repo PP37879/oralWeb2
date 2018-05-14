@@ -21,6 +21,8 @@ import {DevelopmentComponent} from './components/development/development.compone
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlashMessagesModule} from 'angular2-flash-messages';
 import {SimpleNotificationsModule} from 'angular2-notifications';
+import {Ng2GoogleChartsModule} from 'ng2-google-charts';
+import { ChartsModule } from 'ng2-charts';
 
 import {CookieService} from 'angular2-cookie/services/cookies.service';
 import {AuthenticateService} from './services/authenticate.service';
@@ -73,7 +75,9 @@ const appRoutes : Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule.forRoot(),
-    SimpleNotificationsModule.forRoot()
+    SimpleNotificationsModule.forRoot(),
+    Ng2GoogleChartsModule,
+    ChartsModule
   ],
   providers: [
     InsertService,

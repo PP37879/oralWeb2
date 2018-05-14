@@ -1,5 +1,18 @@
 <form class="selectForm">
   <h1 id="header">Oral Health Status Chart</h1>
+  <div id="piechart"></div>
+  <div *ngIf="show">
+    <div style="display: block">
+      <canvas baseChart
+              [datasets]="barChartData"
+              [labels]="barChartLabels"
+              [options]="barChartOptions"
+              [legend]="barChartLegend"
+              [chartType]="barChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+    </div>
+  </div>
   <div class="typeSelection">
     <h2 id="selectorHeader">Select Chart Type</h2>
     <select class="form-control" id="type" [(ngModel)]="type" (change)="onSelectType($event.target.value)">
@@ -50,5 +63,15 @@
       <button type="submit" class="btn btn-success" (click)="showChart()">OK</button>
     </div>
   </div>
-  
+  <!-- <div *ngIf="showChart">
+    <div style="display:block">
+      <canvas baseChart
+      [datasets] = "barChartData"
+      [labels] = "barChartOptions"
+      [options] = "barChartLegend"
+      [chartType] = "barChartType"
+      (chartHover) = "chartHovered($event)"
+      (chartClick)="chartClicked($event)"></canvas>
+    </div>
+  </div> -->
 </form>

@@ -150,13 +150,43 @@ export class InsertService {
      }); ;
   }
 
-  // getDataFromSchool(){
-  //   let url = Connect.getHostUrl()+'/getdataforchart.php';
-  //   let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
-  //   return this.http.post(url,header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
-  //     console.log(error);
-  //     return  Observable.of(false) ;
-  //    }); ;
-  // }
+  getResultFromStudentID(studentID):Observable<boolean>{
+    let url = Connect.getHostUrl()+'/getForGroup.php';
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url,studentID,header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
+  }
 
+  assignGroup(analyzedData){
+    let url = Connect.getHostUrl()+'/assignGroup.php';
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url, analyzedData, header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
+  }
+
+  getResultStatus(){
+    let url = Connect.getHostUrl()+'/getResult.php';
+    return this.http.get(url).map((res)=>{return res.json()});
+  }
+
+  createIndividualReport(info){
+    let url = Connect.getHostUrl()+'/createIndReport.php';
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url, info , header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
+  }
+  updateIndividualReport(info){
+    let url = Connect.getHostUrl()+'/assignGroup.php';
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url, info, header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
+  }
 }

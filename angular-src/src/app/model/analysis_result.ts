@@ -6,9 +6,11 @@ export class AnalysisResult{
     analyzeSchoolRoom : string;
     analyzeStudentID : number;
     analyzeDentUsername : string;
+    totalNormalMilkTeeth : number;
+    totalNormalPermanentTeeth : number;
     analyzeMilkDMFT : number;
     analyzePermanentDMFT : number;
-    groupType : string;
+    groupType : string[];
     gender : string;
     analyzeStudentName : string;
 }
