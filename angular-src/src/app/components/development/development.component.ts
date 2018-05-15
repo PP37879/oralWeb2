@@ -103,6 +103,7 @@ export class DevelopmentComponent implements OnInit {
   cl25: number;
   cl26: number;
   cl27: number;
+  showTable : boolean;
   individualVar: number[];
   variableArray: number[][];
   classVar: number[];
@@ -152,6 +153,7 @@ export class DevelopmentComponent implements OnInit {
     this.barChartLabels = [];
     this.barChartData = [{ data: [], label: "" }, { data: [], label: "" }, { data: [], label: "" }];
     this.reportList = [];
+    this.showTable = false;
   }
   ngOnInit() {
     this.insert.getResultStatus().subscribe(data => {
@@ -454,10 +456,7 @@ export class DevelopmentComponent implements OnInit {
           , teethGroup[26], teethGroup[27]
           , teethGroup[28], teethGroup[29]
           , teethGroup[30], teethGroup[31]];
-        console.log(this.table1Row1);
-        console.log(this.table1Row2);
-        console.log(this.table2Row1);
-        console.log(this.table2Row2);
+          this.showTable = true;
         // this.analysisResultForTable[0].groupType = teethGroup;
         // this.recordResultForTable[0].teeth = teethRecord;
       });
@@ -466,26 +465,71 @@ export class DevelopmentComponent implements OnInit {
     } else if (!this.hideClassroom && this.hideIndividual && this.hideSchool) {
       const info = {
         type: "classroom",
+        studentID: this.selectedStudentAnalysisResult.analyzeStudentID,
         classroom: this.selectedStudentAnalysisResult.analyzeSchoolRoom,
         school: this.selectedStudentAnalysisResult.analyzeSchool
       }
       this.insert.getReportData(info).subscribe(res => {
         for (var i = 0; i < res.length; i++) {
-          console.log(res[i]);
-          // this.analysisResult = new AnalysisResult();
-          // this.analysisResult.analysisID = res[i][0];
-          // this.analysisResult.analyzeDate = res[i][1];
-          // this.analysisResult.analyzeSchool = res[i][2];
-          // this.analysisResult.analyzeSchoolRoom = res[i][3];
-          // this.analysisResult.analyzeStudentID = res[i][4];
-          // this.analysisResult.analyzeDentUsername = res[i][5];
-          // this.analysisResult.analyzeMilkDMFT = res[i][6];
-          // this.analysisResult.analyzePermanentDMFT = res[i][7];
-          // this.analysisResult.analyzeStudentName = res[i][8];
-          // this.analysisResult.groupType = res[i][9];
-          // this.analysisResult.gender = res[i][10];
-          // this.retrievedAnalysisList.push(this.analysisResult);
+          this.barChartLabels.push(res[i][0]);
+          this.report = new Report();
+          this.report.report_genDate = res[i][0];
+          this.report.report_studentID = res[i][1];
+          this.report.ind1 = +res[i][2];
+          this.report.ind2 = +res[i][3];
+          this.report.ind3 = +res[i][4];
+          this.report.ind4 = +res[i][5];
+          this.report.ind5 = +res[i][6];
+          this.report.ind6 = +res[i][7];
+          this.report.ind7 = +res[i][8];
+          this.report.ind8 = +res[i][9];
+          this.report.ind9 = +res[i][10];
+          this.report.ind10 = +res[i][11];
+          this.report.ind11 = +res[i][12];
+          this.report.ind12 = +res[i][13];
+          this.report.ind13 = +res[i][14];
+          this.report.ind14 = +res[i][15];
+          this.report.ind15 = +res[i][16];
+          this.report.ind16 = +res[i][17];
+          this.report.ind17 = +res[i][18];
+          this.report.ind18 = +res[i][19];
+          var countCH1 = 0;
+          var countCH2 = 0;
+          for (var j = 22; j < 54; j++) {
+            if (res[i][j].includes("CH1")) {
+              countCH1++;
+            }
+            if (res[i][j] === "CH2") {
+              countCH2++;
+            }
+          }
+          if (i === 0) {
+            this.requireDentalService = this.report.ind4 + this.report.ind9;
+          }
+          var normalOrFilledTeeth = this.report.ind3 + this.report.ind5 + this.report.ind8 + this.report.ind10;
+          var previousCariesTeeth = countCH2;
+          var newCariesTeeth = countCH1;
+          // console.log(normalOrFilledTeeth);
+          this.normalorFilledData.push(normalOrFilledTeeth);
+          this.previousCariesData.push(previousCariesTeeth);
+          this.newCariesData.push(newCariesTeeth);
+          this.reportList.push(this.report);
         }
+        this.totalTeeth = this.reportList[0].ind1 + this.reportList[0].ind2;
+        this.totalMilk = this.reportList[0].ind1;
+        this.totalPermanent = this.reportList[0].ind2;
+        this.successfulCariesPrevention = this.reportList[0].ind14;
+        this.previousDentalServiceReceive = this.reportList[0].ind15;
+        this.presentNewCaries = this.newCariesData[0];
+        // console.log(this.normalorFilledData);
+        // console.log(this.previousCariesData);
+        // console.log(this.newCariesData);
+        // console.log(lab);
+        this.barChartData = [
+          { data: this.normalorFilledData, label: lab[0] },
+          { data: this.previousCariesData, label: lab[1] },
+          { data: this.newCariesData, label: lab[2] }
+        ];
       });
     }
     //  else if (!this.hideSchool && this.hideIndividual && this.hideClassroom) {
@@ -1525,7 +1569,6 @@ export class DevelopmentComponent implements OnInit {
       school: this.selectedSchool,
       classroom: this.selectedClass
     }
-    console.log(info);
     this.insert.getResultAnalysisOfClass(info).subscribe(data => {
       this.cl1 = 0; this.cl2 = 0; this.cl3 = 0; this.cl4 = 0; this.cl5 = 0;
       this.cl6 = 0; this.cl7 = 0; this.cl8 = 0; this.cl9 = 0; this.cl10 = 0;
@@ -1538,7 +1581,6 @@ export class DevelopmentComponent implements OnInit {
         var bigDCount = +0;
         var ch1CountIndividual = +0;
         var tx012CountIndividual = +0;
-        console.log(data[i][10]);
         this.recordClass = new RecordResult();
         this.analysisClass = new AnalysisResult();
         this.analysisClass.analysisID = data[i][0];
@@ -1571,7 +1613,6 @@ export class DevelopmentComponent implements OnInit {
         }
         this.cl7 += +data[i][40];
         this.cl13 += +data[i][41]
-        //this.cl8 -> calculate outside cl8 = cl7/data.length
         for (var l = 44; l < 76; l++) {
           if (data[i][l] === "A" || data[i][l] === "B" ||
             data[i][l] === "C" || data[i][l] === "D" || data[i][l] === "F" || data[i][l] === "G") {
@@ -1624,8 +1665,6 @@ export class DevelopmentComponent implements OnInit {
         if (tx012CountIndividual > 0) {
           this.cl22++;
         }
-        //cl15 calculate outside for loop => cl14/data.length
-        //cl16 calculate outside also
       }
       this.cl8 = this.cl7 / data.length;
       this.cl15 = this.cl14 / data.length;
