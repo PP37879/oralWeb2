@@ -6,6 +6,8 @@ import { AnalysisResult } from '../../model/analysis_result';
 import { ChartsModule } from 'ng2-charts';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { Report } from '../../model/report';
+import * as html2canvas from 'html2canvas';
+import * as jsPDF from 'jspdf';
 @Component({
   selector: 'app-development',
   templateUrl: './development.component.html',
@@ -102,7 +104,7 @@ export class DevelopmentComponent implements OnInit {
   cl25: number;
   cl26: number;
   cl27: number;
-  showTable : boolean;
+  showTable: boolean;
   individualVar: number[];
   variableArray: number[][];
   classVar: number[];
@@ -455,7 +457,7 @@ export class DevelopmentComponent implements OnInit {
           , teethGroup[26], teethGroup[27]
           , teethGroup[28], teethGroup[29]
           , teethGroup[30], teethGroup[31]];
-          this.showTable = true;
+        this.showTable = true;
         // this.analysisResultForTable[0].groupType = teethGroup;
         // this.recordResultForTable[0].teeth = teethRecord;
       });
@@ -1668,42 +1670,58 @@ export class DevelopmentComponent implements OnInit {
       this.cl16 = this.cl13 / data.length;
       this.cl19 = (this.cl7 / (this.cl1 + this.cl2)) * 100;
       const info = {
-        genDate : this.analysisClass.analyzeDate,
-        school : this.selectedSchool,
-        classroom : this.selectedClass,
-        c1 : this.cl1,
-        c2 : this.cl2,
-        c3 : this.cl3,
-        c4 : this.cl4,
-        c5 : this.cl5,
-        c6 : this.cl6,
-        c7 : this.cl7,
-        c8 : this.cl8,
-        c9 : this.cl9,
-        c10 : this.cl10,
-        c11 : this.cl11,
-        c12 : this.cl12,
-        c13 : this.cl13,
-        c14 : this.cl14,
-        c15 : this.cl15,
-        c16 : this.cl16,
-        c17 : this.cl17,
-        c18 : this.cl18,
-        c19 : this.cl19,
-        c20 : this.cl20,
-        c21 : this.cl21,
-        c22 : this.cl22,
-        c23 : this.cl23,
-        c24 : this.cl24,
-        c25 : this.cl25,
-        c26 : this.cl26,
-        c27 : this.cl27
+        genDate: this.analysisClass.analyzeDate,
+        school: this.selectedSchool,
+        classroom: this.selectedClass,
+        c1: this.cl1,
+        c2: this.cl2,
+        c3: this.cl3,
+        c4: this.cl4,
+        c5: this.cl5,
+        c6: this.cl6,
+        c7: this.cl7,
+        c8: this.cl8,
+        c9: this.cl9,
+        c10: this.cl10,
+        c11: this.cl11,
+        c12: this.cl12,
+        c13: this.cl13,
+        c14: this.cl14,
+        c15: this.cl15,
+        c16: this.cl16,
+        c17: this.cl17,
+        c18: this.cl18,
+        c19: this.cl19,
+        c20: this.cl20,
+        c21: this.cl21,
+        c22: this.cl22,
+        c23: this.cl23,
+        c24: this.cl24,
+        c25: this.cl25,
+        c26: this.cl26,
+        c27: this.cl27
       }
-      this.insert.createClassReport(info).subscribe(data=>{
+      this.insert.createClassReport(info).subscribe(data => {
         console.log(data);
       })
     })
   }
+  downloadForParents() {
+    html2canvas(document.getElementById('forParents')).then(function (canvas) {
+      var img = canvas.toDataURL("image/png");
+      var doc = new jsPDF();
+      doc.addImage(img, 'JPEG', 13, 40);
+      doc.save('student_Result.pdf');
+    });
 
+  }
+  downloadForDentist() {
+    html2canvas(document.getElementById('forDentist')).then(function (canvas) {
+      var img = canvas.toDataURL("image/png");
+      var doc = new jsPDF();
+      doc.addImage(img, 'JPEG', 13, 40);
+      doc.save('student_ResultForDentist.pdf');
+    });
+  }
 }
 

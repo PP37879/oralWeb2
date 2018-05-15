@@ -57,3 +57,13 @@ th{
     color: white;
     text-align: center;
 }
+button{
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 5px 5px 3px rgba(128, 128, 128, 0.808);
+    border: 1px;
+    font-size: 17px;
+    border-radius: 10px;
+    font-size: 20px;
+    width: 20%;
+    margin:5%;
+}

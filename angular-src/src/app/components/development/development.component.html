@@ -15,11 +15,11 @@
       <option value="{{school}}" *ngFor="let school of schoolList">{{school}}</option>
     </select>
     <label>Select Classroom</label>
-    <select class="form-control" id="classroom" [(ngModel)]="selectedClass" (change)="onSelectClass($event.target.value)"[ngModelOptions]="{standalone: true}">
+    <select class="form-control" id="classroom" [(ngModel)]="selectedClass" (change)="onSelectClass($event.target.value)" [ngModelOptions]="{standalone: true}">
       <option value="{{class}}" *ngFor="let class of classList">{{class}}</option>
     </select>
     <label>Select Student ID</label>
-    <select class="form-control" id="studentID" [(ngModel)]="selectedID" (change)="onSelectID($event.target.value)"[ngModelOptions]="{standalone: true}">
+    <select class="form-control" id="studentID" [(ngModel)]="selectedID" (change)="onSelectID($event.target.value)" [ngModelOptions]="{standalone: true}">
       <option value="{{id}}" *ngFor="let id of idList">{{id}}</option>
     </select>
     <div class="forBtn">
@@ -27,19 +27,19 @@
     </div>
   </div>
   <div class="inputClassroom" *ngIf="!hideClassroom">
-      <h2 id="smallHeader">School Oral Health Status Chart</h2>
-      <label>Select School</label>
-      <select class="form-control" id="school" [(ngModel)]="selectedSchool" (change)="onSelectSchool($event.target.value)" [ngModelOptions]="{standalone: true}">
-        <option value="{{school}}" *ngFor="let school of schoolList">{{school}}</option>
-      </select>
-      <label>Select Classroom</label>
-      <select class="form-control" id="classroom" [(ngModel)]="selectedClass" (change)="onSelectClass($event.target.value)"[ngModelOptions]="{standalone: true}">
-        <option value="{{class}}" *ngFor="let class of classList">{{class}}</option>
-      </select>
-      <div class="forBtn">
-        <button type="submit" class="btn btn-success" (click)="showChart()">OK</button>
-      </div>
+    <h2 id="smallHeader">School Oral Health Status Chart</h2>
+    <label>Select School</label>
+    <select class="form-control" id="school" [(ngModel)]="selectedSchool" (change)="onSelectSchool($event.target.value)" [ngModelOptions]="{standalone: true}">
+      <option value="{{school}}" *ngFor="let school of schoolList">{{school}}</option>
+    </select>
+    <label>Select Classroom</label>
+    <select class="form-control" id="classroom" [(ngModel)]="selectedClass" (change)="onSelectClass($event.target.value)" [ngModelOptions]="{standalone: true}">
+      <option value="{{class}}" *ngFor="let class of classList">{{class}}</option>
+    </select>
+    <div class="forBtn">
+      <button type="submit" class="btn btn-success" (click)="showChart()">OK</button>
     </div>
+  </div>
   <!-- <div class="inputSchool" *ngIf="!hideSchool">
     <h2 id="smallHeader">School Oral Health Status Chart</h2>
     <label>Select School</label>
@@ -51,133 +51,135 @@
     </div>
   </div> -->
   <div *ngIf="showGraph">
-    <div>
-        <h3>Student ID : {{selectedID}} School : {{selectedSchool}} Classroom : {{selectedClass}}</h3>
-        <h4>Total Teeth : {{totalTeeth}}</h4>
-        <h4>Total Milk Teeth : {{totalMilk}}  Total Permanent Teeth : {{totalPermanent}}</h4>
-        <h4>Total Successful caries prevention from last semester : {{successfulCariesPrevention}}</h4>
-        <h4>Total last semester dental service recieved teeth : {{previousDentalServiceReceive}}</h4>
-        <h4>Total new caries : {{presentNewCaries}}</h4>
-        <div style="display:block">
-          <canvas baseChart 
-          [datasets]="barChartData"
-          [labels]="barChartLabels"
-          [options]="barChartOptions"
-          [colors]="barChartColors"
-          [legend]="barChartLegend"
-          [chartType]="barChartType"
-          (chartHover)="chartHovered($event)"></canvas>
-        </div>
-        <h3>Dental Service Requirement</h3>
-        <h4>Total teeth with caries which require dental service :{{requireDentalService}} </h4>
-        <div *ngIf="showTable">
-          <h4>Cross-Sectional Data</h4>
-            <table>
-              <tr>
-                <th>tooth</th>
-                <th>18</th>
-                <th>17</th>
-                <th>16</th>
-                <th>15/55</th>
-                <th>14/54</th>
-                <th>13/53</th>
-                <th>12/52</th>
-                <th>11/51</th>
-                <th>21/61</th>
-                <th>22/62</th>
-                <th>23/63</th>
-                <th>24/64</th>
-                <th>25/65</th>
-                <th>26</th>
-                <th>27</th>
-                <th>28</th>
-                <th>tooth</th>
-              </tr>
-              <tr>
-                <td id="status">status</td>
-                <td *ngFor="let tab of table1Row1">{{tab}}</td>
-                <td id="status">status</td>
-              </tr>
-              <tr>
-                  <td id="status">status</td>
-                  <td *ngFor="let tab of table1Row2">{{tab}}</td>
-                  <td id="status">status</td>
-                </tr>
-                <tr>
-                    <th>tooth</th>
-                    <th>18</th>
-                    <th>17</th>
-                    <th>16</th>
-                    <th>15/55</th>
-                    <th>14/54</th>
-                    <th>13/53</th>
-                    <th>12/52</th>
-                    <th>11/51</th>
-                    <th>21/61</th>
-                    <th>22/62</th>
-                    <th>23/63</th>
-                    <th>24/64</th>
-                    <th>25/65</th>
-                    <th>26</th>
-                    <th>27</th>
-                    <th>28</th>
-                    <th>tooth</th>
-                  </tr>
-            </table>
-            <h4>Change from last exam</h4>
-            <table>
-                <tr>
-                    <th>tooth</th>
-                    <th>18</th>
-                    <th>17</th>
-                    <th>16</th>
-                    <th>15/55</th>
-                    <th>14/54</th>
-                    <th>13/53</th>
-                    <th>12/52</th>
-                    <th>11/51</th>
-                    <th>21/61</th>
-                    <th>22/62</th>
-                    <th>23/63</th>
-                    <th>24/64</th>
-                    <th>25/65</th>
-                    <th>26</th>
-                    <th>27</th>
-                    <th>28</th>
-                    <th>tooth</th>
-                  </tr>
-                  <tr>
-                    <td id="status">status</td>
-                    <td *ngFor="let tab of table2Row1">{{tab}}</td>
-                    <td id="status">status</td>
-                  </tr>
-                  <tr>
-                      <td id="status">status</td>
-                      <td *ngFor="let tab of table2Row2">{{tab}}</td>
-                      <td id="status">status</td>
-                    </tr>
-                    <tr>
-                        <th>tooth</th>
-                        <th>18</th>
-                        <th>17</th>
-                        <th>16</th>
-                        <th>15/55</th>
-                        <th>14/54</th>
-                        <th>13/53</th>
-                        <th>12/52</th>
-                        <th>11/51</th>
-                        <th>21/61</th>
-                        <th>22/62</th>
-                        <th>23/63</th>
-                        <th>24/64</th>
-                        <th>25/65</th>
-                        <th>26</th>
-                        <th>27</th>
-                        <th>28</th>
-                        <th>tooth</th>
-                      </tr> 
-              </table>
-          </div>
-        </div>
+    <div id="forParents">
+      <h3>Student ID : {{selectedID}} School : {{selectedSchool}} Classroom : {{selectedClass}}</h3>
+      <h4>Total Teeth : {{totalTeeth}}</h4>
+      <h4>Total Milk Teeth : {{totalMilk}} Total Permanent Teeth : {{totalPermanent}}</h4>
+      <h4>Total Successful caries prevention from last semester : {{successfulCariesPrevention}}</h4>
+      <h4>Total last semester dental service recieved teeth : {{previousDentalServiceReceive}}</h4>
+      <h4>Total new caries : {{presentNewCaries}}</h4>
+      <div style="display:block">
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [colors]="barChartColors"
+          [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"></canvas>
+      </div>
     </div>
+    <div id="forDentist">
+      <div id="forDentist" *ngIf="showTable">
+        <h4>Cross-Sectional Data</h4>
+        <table>
+          <tr>
+            <th>tooth</th>
+            <th>18</th>
+            <th>17</th>
+            <th>16</th>
+            <th>15/55</th>
+            <th>14/54</th>
+            <th>13/53</th>
+            <th>12/52</th>
+            <th>11/51</th>
+            <th>21/61</th>
+            <th>22/62</th>
+            <th>23/63</th>
+            <th>24/64</th>
+            <th>25/65</th>
+            <th>26</th>
+            <th>27</th>
+            <th>28</th>
+            <th>tooth</th>
+          </tr>
+          <tr>
+            <td id="status">status</td>
+            <td *ngFor="let tab of table1Row1">{{tab}}</td>
+            <td id="status">status</td>
+          </tr>
+          <tr>
+            <td id="status">status</td>
+            <td *ngFor="let tab of table1Row2">{{tab}}</td>
+            <td id="status">status</td>
+          </tr>
+          <tr>
+            <th>tooth</th>
+            <th>18</th>
+            <th>17</th>
+            <th>16</th>
+            <th>15/55</th>
+            <th>14/54</th>
+            <th>13/53</th>
+            <th>12/52</th>
+            <th>11/51</th>
+            <th>21/61</th>
+            <th>22/62</th>
+            <th>23/63</th>
+            <th>24/64</th>
+            <th>25/65</th>
+            <th>26</th>
+            <th>27</th>
+            <th>28</th>
+            <th>tooth</th>
+          </tr>
+        </table>
+        <h4>Change from last exam</h4>
+        <table>
+          <tr>
+            <th>tooth</th>
+            <th>18</th>
+            <th>17</th>
+            <th>16</th>
+            <th>15/55</th>
+            <th>14/54</th>
+            <th>13/53</th>
+            <th>12/52</th>
+            <th>11/51</th>
+            <th>21/61</th>
+            <th>22/62</th>
+            <th>23/63</th>
+            <th>24/64</th>
+            <th>25/65</th>
+            <th>26</th>
+            <th>27</th>
+            <th>28</th>
+            <th>tooth</th>
+          </tr>
+          <tr>
+            <td id="status">status</td>
+            <td *ngFor="let tab of table2Row1">{{tab}}</td>
+            <td id="status">status</td>
+          </tr>
+          <tr>
+            <td id="status">status</td>
+            <td *ngFor="let tab of table2Row2">{{tab}}</td>
+            <td id="status">status</td>
+          </tr>
+          <tr>
+            <th>tooth</th>
+            <th>18</th>
+            <th>17</th>
+            <th>16</th>
+            <th>15/55</th>
+            <th>14/54</th>
+            <th>13/53</th>
+            <th>12/52</th>
+            <th>11/51</th>
+            <th>21/61</th>
+            <th>22/62</th>
+            <th>23/63</th>
+            <th>24/64</th>
+            <th>25/65</th>
+            <th>26</th>
+            <th>27</th>
+            <th>28</th>
+            <th>tooth</th>
+          </tr>
+        </table>
+      </div>
+      <h3>Dental Service Requirement</h3>
+      <h4>Total teeth with caries which require dental service :{{requireDentalService}} </h4>
+    </div>
+    <div class="inline-block">
+        <div class="forBtn" align="center">
+            <button type="submit" class="btn btn-success" (click)="downloadForParents()">For Parents</button>
+            <button type="submit" *ngIf="showTable"   class="btn btn-success" (click)="downloadForDentist()">For Dentist</button>
+        </div>  
+    </div>
+  </div>
 </form>
