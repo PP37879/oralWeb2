@@ -51,8 +51,8 @@
             <button type="submit" class="btn btn-success" (click)="showChart()">OK</button>
           </div>
         </div> -->
-    <canvas id="canvas">
-      <div>
+    <div id="forImg" *ngIf="showGraph">
+      <div id="forParents">
         <h3>Student ID : {{selectedID}} School : {{selectedSchool}} Classroom : {{selectedClass}}</h3>
         <h4>Total Teeth : {{totalTeeth}}</h4>
         <h4>Total Milk Teeth : {{totalMilk}} Total Permanent Teeth : {{totalPermanent}}</h4>
@@ -65,7 +65,7 @@
         </div>
         <h3>Dental Service Requirement</h3>
         <h4>Total teeth with caries which require dental service :{{requireDentalService}} </h4>
-        <div *ngIf="showTable">
+        <div id="forDentist" *ngIf="showTable">
           <h4>Cross-Sectional Data</h4>
           <table>
             <tr>
@@ -172,9 +172,10 @@
               <th>tooth</th>
             </tr>
           </table>
+          <button type="submit" class="btn btn-success" (click)="createPDF()">OK</button>
         </div>
       </div>
-    </canvas>
+    </div>
   </form>
   <!-- <div class="form-group">
       <label style="margin-top:25px">Select Date</label>

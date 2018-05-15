@@ -9,6 +9,7 @@ import { AnalysisResult } from '../../model/analysis_result';
 import { ChartsModule } from 'ng2-charts';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { Report } from '../../model/report';
+import * as html2canvas from 'html2canvas';
 
 // declare var jsPDF: any;
 
@@ -108,7 +109,7 @@ export class PDFComponent implements OnInit {
   cl25: number;
   cl26: number;
   cl27: number;
-  showTable : boolean;
+  showTable: boolean;
   individualVar: number[];
   variableArray: number[][];
   classVar: number[];
@@ -337,6 +338,7 @@ export class PDFComponent implements OnInit {
     this.previousCariesData = [];
     this.newCariesData = [];
     var lab = ["Non Caries or Filled Teeth", "Previous Caries", "New Caries"];
+    this.showGraph = true;
     if (!this.hideIndividual && this.hideClassroom && this.hideSchool) {
       const info = {
         type: "individual",
@@ -461,26 +463,26 @@ export class PDFComponent implements OnInit {
           , teethGroup[26], teethGroup[27]
           , teethGroup[28], teethGroup[29]
           , teethGroup[30], teethGroup[31]];
-          this.showTable = true;
+        this.showTable = true;
         // this.analysisResultForTable[0].groupType = teethGroup;
         // this.recordResultForTable[0].teeth = teethRecord;
       });
       // console.log(this.recordResultForTable[0].teeth);
-      var doc = new jsPDF();
-      doc.text("Hello", 20, 20);
-      doc.addPage();
-      let canvas = document.getElementById('canvas') as HTMLCanvasElement;
-      var dataURL = canvas.toDataURL('image/jpeg', 1.0);
-      console.log(dataURL);
-      doc.addImage(dataURL,'JPEG',20,30,100,100);
+      // var doc = new jsPDF();
+      // doc.text("Hello", 20, 20);
+      // doc.addPage();
+      // let canvas = document.getElementById('canvas') as HTMLCanvasElement;
+      // var dataURL = canvas.toDataURL('image/jpeg', 1.0);
+      // console.log(dataURL);
+      // doc.addImage(dataURL,'JPEG',20,30,100,100);
       // doc.save('Analysis_Report.pdf');
-  //   doc.text(20, 20, "https://oralhealthstatuscheck.com");
-  //   var image = "https://oralhealthstatuscheck.com/assets/img/logo.png";
-  //   // var wordArray = CryptoJS.enc.Utf8.parse(img);
-  //   // var imgUrl = CryptoJS.enc.Base64.stringify(wordArray);
-  //   // console.log("data:image/png;base64,"+imgUrl);
-  //   // doc.addImage(stringImg, 'PNG', 20, 30, 100, 100);
-  //   // doc.save('Analysis_Result.pdf');
+      //   doc.text(20, 20, "https://oralhealthstatuscheck.com");
+      //   var image = "https://oralhealthstatuscheck.com/assets/img/logo.png";
+      //   // var wordArray = CryptoJS.enc.Utf8.parse(img);
+      //   // var imgUrl = CryptoJS.enc.Base64.stringify(wordArray);
+      //   // console.log("data:image/png;base64,"+imgUrl);
+      //   // doc.addImage(stringImg, 'PNG', 20, 30, 100, 100);
+      //   // doc.save('Analysis_Result.pdf');
       //   var rows = [];
 
     } else if (!this.hideClassroom && this.hideIndividual && this.hideSchool) {
@@ -576,7 +578,9 @@ export class PDFComponent implements OnInit {
     //     }
     //   });
     // }
-    this.showGraph = true;
+    // this.showGraph = true;
+    // if (this.showGraph) {
+    // }
     this.hideClassroom = true;
     this.hideIndividual = true;
     this.hideSchool = true;
@@ -1692,41 +1696,55 @@ export class PDFComponent implements OnInit {
       this.cl16 = this.cl13 / data.length;
       this.cl19 = (this.cl7 / (this.cl1 + this.cl2)) * 100;
       const info = {
-        genDate : this.analysisClass.analyzeDate,
-        school : this.selectedSchool,
-        classroom : this.selectedClass,
-        c1 : this.cl1,
-        c2 : this.cl2,
-        c3 : this.cl3,
-        c4 : this.cl4,
-        c5 : this.cl5,
-        c6 : this.cl6,
-        c7 : this.cl7,
-        c8 : this.cl8,
-        c9 : this.cl9,
-        c10 : this.cl10,
-        c11 : this.cl11,
-        c12 : this.cl12,
-        c13 : this.cl13,
-        c14 : this.cl14,
-        c15 : this.cl15,
-        c16 : this.cl16,
-        c17 : this.cl17,
-        c18 : this.cl18,
-        c19 : this.cl19,
-        c20 : this.cl20,
-        c21 : this.cl21,
-        c22 : this.cl22,
-        c23 : this.cl23,
-        c24 : this.cl24,
-        c25 : this.cl25,
-        c26 : this.cl26,
-        c27 : this.cl27
+        genDate: this.analysisClass.analyzeDate,
+        school: this.selectedSchool,
+        classroom: this.selectedClass,
+        c1: this.cl1,
+        c2: this.cl2,
+        c3: this.cl3,
+        c4: this.cl4,
+        c5: this.cl5,
+        c6: this.cl6,
+        c7: this.cl7,
+        c8: this.cl8,
+        c9: this.cl9,
+        c10: this.cl10,
+        c11: this.cl11,
+        c12: this.cl12,
+        c13: this.cl13,
+        c14: this.cl14,
+        c15: this.cl15,
+        c16: this.cl16,
+        c17: this.cl17,
+        c18: this.cl18,
+        c19: this.cl19,
+        c20: this.cl20,
+        c21: this.cl21,
+        c22: this.cl22,
+        c23: this.cl23,
+        c24: this.cl24,
+        c25: this.cl25,
+        c26: this.cl26,
+        c27: this.cl27
       }
-      this.insert.createClassReport(info).subscribe(data=>{
+      this.insert.createClassReport(info).subscribe(data => {
         console.log(data);
       })
     })
+  }
+  createPDF(){
+    html2canvas(document.getElementById('forParents')).then(function (canvas) {
+      var img = canvas.toDataURL("image/png");
+      var doc = new jsPDF();
+      doc.addImage(img, 'JPEG', 5, 20);
+      doc.save('student_Result.pdf');
+  });
+  html2canvas(document.getElementById('forDentist')).then(function (canvas) {
+    var img = canvas.toDataURL("image/png");
+    var doc = new jsPDF();
+    doc.addImage(img, 'JPEG', 5, 20);
+    doc.save(this.selectedID+'student_ResultForDentist.pdf');
+});
   }
   // private base64textString: String = "";
   // selectedDate: Date;

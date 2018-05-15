@@ -6,7 +6,6 @@ import { AnalysisResult } from '../../model/analysis_result';
 import { ChartsModule } from 'ng2-charts';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { Report } from '../../model/report';
-declare var google: any;
 @Component({
   selector: 'app-development',
   templateUrl: './development.component.html',
@@ -460,8 +459,6 @@ export class DevelopmentComponent implements OnInit {
         // this.analysisResultForTable[0].groupType = teethGroup;
         // this.recordResultForTable[0].teeth = teethRecord;
       });
-      // console.log(this.recordResultForTable[0].teeth);
-
     } else if (!this.hideClassroom && this.hideIndividual && this.hideSchool) {
       const info = {
         type: "classroom",
