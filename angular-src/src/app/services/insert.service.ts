@@ -141,7 +141,7 @@ export class InsertService {
      }); ;
   }
 
-  getChartData(information){
+  getReportData(information){
     let url = Connect.getHostUrl()+'/getdataforchart.php';
     let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
     return this.http.post(url,information, header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
@@ -182,9 +182,17 @@ export class InsertService {
      }); ;
   }
   updateIndividualReport(info){
-    let url = Connect.getHostUrl()+'/assignGroup.php';
+    let url = Connect.getHostUrl()+'/updateIndReport.php';
     let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
     return this.http.post(url, info, header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
+  }
+  getDataForTable(studentID){
+    let url = Connect.getHostUrl()+'/getReportTableData.php';
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url,studentID,header).map((res: Response) => { return res.json()}).catch((error: any) => { 
       console.log(error);
       return  Observable.of(false) ;
      }); ;

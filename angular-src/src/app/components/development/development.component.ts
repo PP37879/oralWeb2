@@ -5,6 +5,7 @@ import { Student } from '../../model/student';
 import { AnalysisResult } from '../../model/analysis_result';
 import { ChartsModule } from 'ng2-charts';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { Report } from '../../model/report';
 declare var google: any;
 @Component({
   selector: 'app-development',
@@ -12,12 +13,41 @@ declare var google: any;
   styleUrls: ['./development.component.css']
 })
 export class DevelopmentComponent implements OnInit {
-  // dataVisual : any[];
-  // public barChartLabels:string[];
-  // public barChartType:string = 'bar';
-  // public barChartLegend:boolean = true;
-  // public barChartData:any[];
-  // show : boolean;
+  public barChartOptions: any = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
+  public barChartLabels: string[];
+  public barChartType: string = 'bar';
+  public barChartLegend: boolean = true;
+  public barChartData: any[];
+  public barChartColors: Array<any> = [
+    { // green
+      backgroundColor: 'rgb(0, 204, 0)',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    },
+    { // dark red
+      backgroundColor: 'rgb(255, 0, 0)',
+      borderColor: 'rgba(77,83,96,1)',
+      pointBackgroundColor: 'rgba(77,83,96,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(77,83,96,1)'
+    },
+    { // light red
+      backgroundColor: 'rgb(255, 77, 77)',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    }
+  ];
+  showGraph: boolean;
   schoolList: string[];
   classList: string[];
   idList: number[];
@@ -39,6 +69,7 @@ export class DevelopmentComponent implements OnInit {
   teethBuffer: string[];
   duplicateStudentID: number[];
   groupType: string;
+  dateList: string[];
   ind13: number;
   ind14: number;
   ind15: number;
@@ -72,6 +103,31 @@ export class DevelopmentComponent implements OnInit {
   cl25: number;
   cl26: number;
   cl27: number;
+  individualVar: number[];
+  variableArray: number[][];
+  classVar: number[];
+  classVariableArray: number[][];
+  chartData: any[];
+  reportList: Report[];
+  report: Report;
+  normalorFilledData: number[];
+  previousCariesData: number[];
+  newCariesData: number[];
+  totalTeeth: number;
+  totalMilk: number;
+  totalPermanent: number;
+  successfulCariesPrevention: number;
+  previousDentalServiceReceive: number;
+  presentNewCaries: number;
+  ServiceRequireTeeth: number;
+  FilledRequireTeeth: number;
+  requireDentalService: number;
+  recordResultForTable: RecordResult[];
+  analysisResultForTable: AnalysisResult[];
+  table1Row1: string[];
+  table1Row2: string[];
+  table2Row1: string[];
+  table2Row2: string[];
   constructor(private insert: InsertService) {
     this.schoolList = [];
     this.classList = [];
@@ -84,7 +140,12 @@ export class DevelopmentComponent implements OnInit {
     this.selectedStudentAnalysisResult = new AnalysisResult();
     this.retrievedAnalysisList = [];
     this.duplicateStudentID = [];
-    // this.showGraph = false;
+    this.variableArray = [];
+    this.classVariableArray = [];
+    this.showGraph = false;
+    this.barChartLabels = [];
+    this.barChartData = [{ data: [], label: "" }, { data: [], label: "" }, { data: [], label: "" }];
+    this.reportList = [];
   }
   ngOnInit() {
     this.insert.getResultStatus().subscribe(data => {
@@ -139,30 +200,36 @@ export class DevelopmentComponent implements OnInit {
     for (var i = 0; i < this.duplicateStudentID.length; i++) {
       this.insert.getResultFromStudentID(this.duplicateStudentID[i]).subscribe(data => {
         if (data !== null || data !== undefined) {
-          this.latestResult = new RecordResult();
-          this.latestResult.resultID = data[0][0];
-          this.latestResult.studentID = data[0][1];
-          this.latestResult.studentName = data[0][2];
-          this.teethBuffer = [];
-          for (var k = 3; k < 35; k++) {
-            this.teethBuffer.push(data[0][k]);
-          }
-          this.latestResult.teeth = this.teethBuffer;
-          this.latestResult.recordDate = data[0][35];
-          this.latestResult.dentistUsername = data[0][36];
+          var i = 0;
+          var j = 1;
+          while (j <= this.duplicateStudentID.length) {
+            this.latestResult = new RecordResult();
+            this.latestResult.resultID = data[i][0];
+            this.latestResult.studentID = data[i][1];
+            this.latestResult.studentName = data[i][2];
+            this.teethBuffer = [];
+            for (var k = 3; k < 35; k++) {
+              this.teethBuffer.push(data[i][k]);
+            }
+            this.latestResult.teeth = this.teethBuffer;
+            this.latestResult.recordDate = data[i][35];
+            this.latestResult.dentistUsername = data[i][36];
 
-          this.previousResult = new RecordResult();
-          this.previousResult.resultID = data[0][0];
-          this.previousResult.studentID = data[0][1];
-          this.previousResult.studentName = data[0][2];
-          this.teethBuffer = [];
-          for (var k = 3; k < 35; k++) {
-            this.teethBuffer.push(data[0][k]);
+            this.previousResult = new RecordResult();
+            this.previousResult.resultID = data[j][0];
+            this.previousResult.studentID = data[j][1];
+            this.previousResult.studentName = data[j][2];
+            this.teethBuffer = [];
+            for (var k = 3; k < 35; k++) {
+              this.teethBuffer.push(data[j][k]);
+            }
+            this.previousResult.teeth = this.teethBuffer;
+            this.previousResult.recordDate = data[j][35];
+            this.previousResult.dentistUsername = data[j][36];
+            this.assignGroupType(this.previousResult, this.latestResult);
+            i++;
+            j++;
           }
-          this.previousResult.teeth = this.teethBuffer;
-          this.previousResult.recordDate = data[0][35];
-          this.previousResult.dentistUsername = data[0][36];
-          this.assignGroupType(this.previousResult, this.latestResult);
         }
       });
     }
@@ -203,7 +270,10 @@ export class DevelopmentComponent implements OnInit {
   }
 
   onSelectType(type) {
-    console.log(type);
+    this.classList = [];
+    this.showGraph = false;
+    this.barChartLabels = [];
+    this.barChartData = [{ data: [], label: "" }, { data: [], label: "" }, { data: [], label: "" }];
     if (type === "individual") {
       this.hideIndividual = false;
       this.hideClassroom = true;
@@ -221,6 +291,7 @@ export class DevelopmentComponent implements OnInit {
 
   onSelectSchool(school) {
     this.selectedStudentAnalysisResult.analyzeSchool = school;
+    this.selectedSchool = school;
     if (this.classList.length > 0) {
       this.classList = [];
     }
@@ -232,6 +303,7 @@ export class DevelopmentComponent implements OnInit {
   }
   onSelectClass(classroom) {
     this.selectedStudentAnalysisResult.analyzeSchoolRoom = classroom;
+    this.selectedClass = classroom;
     if (this.idList.length > 0) {
       this.idList = [];
     }
@@ -243,8 +315,14 @@ export class DevelopmentComponent implements OnInit {
   }
   onSelectID(studentID) {
     this.selectedStudentAnalysisResult.analyzeStudentID = studentID;
+    this.selectedID = studentID;
   }
   showChart() {
+    this.dateList = [];
+    this.normalorFilledData = [];
+    this.previousCariesData = [];
+    this.newCariesData = [];
+    var lab = ["Non Caries or Filled Teeth", "Previous Caries", "New Caries"];
     if (!this.hideIndividual && this.hideClassroom && this.hideSchool) {
       const info = {
         type: "individual",
@@ -252,88 +330,186 @@ export class DevelopmentComponent implements OnInit {
         classroom: this.selectedStudentAnalysisResult.analyzeSchoolRoom,
         school: this.selectedStudentAnalysisResult.analyzeSchool
       }
-      this.insert.getChartData(info).subscribe(res => {
+      this.insert.getReportData(info).subscribe(res => {
         for (var i = 0; i < res.length; i++) {
-          this.analysisResult = new AnalysisResult();
-          // this.analysisResult.analysisID = res[i][0];
-          this.analysisResult.analyzeDate = res[i][1];
-          // this.analysisResult.analyzeSchool = res[i][2];
-          // this.analysisResult.analyzeSchoolRoom = res[i][3];
-          // this.analysisResult.analyzeStudentID = res[i][4];
-          // this.analysisResult.analyzeDentUsername = res[i][5];
-          this.analysisResult.totalNormalMilkTeeth = res[i][38];
-          // this.analysisResult.totalNormalPermanentTeeth = res[i][39];
-          this.analysisResult.analyzeMilkDMFT = res[i][40];
-          this.analysisResult.analyzePermanentDMFT = res[i][41];
-          // this.analysisResult.analyzeStudentName = res[i][42];
-          // this.analysisResult.gender = res[i][43];
-          this.retrievedAnalysisList.push(this.analysisResult);
-          console.log(res[i][1]);
-          // this.barChartLabels = res[i][1]; 
+          this.barChartLabels.push(res[i][0]);
+          this.report = new Report();
+          this.report.report_genDate = res[i][0];
+          this.report.report_studentID = res[i][1];
+          this.report.ind1 = +res[i][2];
+          this.report.ind2 = +res[i][3];
+          this.report.ind3 = +res[i][4];
+          this.report.ind4 = +res[i][5];
+          this.report.ind5 = +res[i][6];
+          this.report.ind6 = +res[i][7];
+          this.report.ind7 = +res[i][8];
+          this.report.ind8 = +res[i][9];
+          this.report.ind9 = +res[i][10];
+          this.report.ind10 = +res[i][11];
+          this.report.ind11 = +res[i][12];
+          this.report.ind12 = +res[i][13];
+          this.report.ind13 = +res[i][14];
+          this.report.ind14 = +res[i][15];
+          this.report.ind15 = +res[i][16];
+          this.report.ind16 = +res[i][17];
+          this.report.ind17 = +res[i][18];
+          this.report.ind18 = +res[i][19];
+          var countCH1 = 0;
+          var countCH2 = 0;
+          for (var j = 22; j < 54; j++) {
+            if (res[i][j].includes("CH1")) {
+              countCH1++;
+            }
+            if (res[i][j] === "CH2") {
+              countCH2++;
+            }
+          }
+          if (i === 0) {
+            this.requireDentalService = this.report.ind4 + this.report.ind9;
+          }
+          var normalOrFilledTeeth = this.report.ind3 + this.report.ind5 + this.report.ind8 + this.report.ind10;
+          var previousCariesTeeth = countCH2;
+          var newCariesTeeth = countCH1;
+          // console.log(normalOrFilledTeeth);
+          this.normalorFilledData.push(normalOrFilledTeeth);
+          this.previousCariesData.push(previousCariesTeeth);
+          this.newCariesData.push(newCariesTeeth);
+          this.reportList.push(this.report);
         }
+        this.totalTeeth = this.reportList[0].ind1 + this.reportList[0].ind2;
+        this.totalMilk = this.reportList[0].ind1;
+        this.totalPermanent = this.reportList[0].ind2;
+        this.successfulCariesPrevention = this.reportList[0].ind14;
+        this.previousDentalServiceReceive = this.reportList[0].ind15;
+        this.presentNewCaries = this.newCariesData[0];
+        // console.log(this.normalorFilledData);
+        // console.log(this.previousCariesData);
+        // console.log(this.newCariesData);
+        // console.log(lab);
+        this.barChartData = [
+          { data: this.normalorFilledData, label: lab[0] },
+          { data: this.previousCariesData, label: lab[1] },
+          { data: this.newCariesData, label: lab[2] }
+        ];
       });
+        this.recordResultForTable = [];
+        this.analysisResultForTable = [];
+        var teethGroup = [];
+        var teethRecord = [];
+        this.insert.getDataForTable(this.selectedID).subscribe(data => {
+          console.log(data);
+          var analysis: AnalysisResult;
+          analysis = new AnalysisResult;
+          var record: RecordResult;
+          record = new RecordResult;
+          this.analysisResultForTable.push(analysis);
+          this.recordResultForTable.push(record);
+          this.analysisResultForTable[0].analyzeStudentID = data[0][4];
+          this.analysisResultForTable[0].analyzeDentUsername = data[0][5];
+          for (var j = 0; j < 32; j++) {
+            var k = +6;
+            var l = +44;
+            teethGroup.push(data[0][k+j]);
+            teethRecord.push(data[0][l+j]);
+          }
+          console.log(teethGroup);
+           console.log(teethRecord);
+           this.table1Row1 = [teethRecord[7], teethRecord[6]
+          , teethRecord[5], teethRecord[4]
+          , teethRecord[3], teethRecord[2]
+          , teethRecord[1], teethRecord[0]
+          , teethRecord[8], teethRecord[9]
+          , teethRecord[10], teethRecord[11]
+          , teethRecord[12], teethRecord[13]
+          , teethRecord[14], teethRecord[15]];
+        this.table1Row2 = [teethRecord[23], teethRecord[22]
+          , teethRecord[21], teethRecord[20]
+          , teethRecord[19], teethRecord[18]
+          , teethRecord[17], teethRecord[16]
+          , teethRecord[24], teethRecord[25]
+          , teethRecord[26], teethRecord[27]
+          , teethRecord[28], teethRecord[29]
+          , teethRecord[30], teethRecord[31]];
+  
+          this.table2Row1 = [teethGroup[7], teethGroup[6]
+          , teethGroup[5], teethGroup[4]
+          , teethGroup[3], teethGroup[2]
+          , teethGroup[1], teethGroup[0]
+          , teethGroup[8], teethGroup[9]
+          , teethGroup[10], teethGroup[11]
+          , teethGroup[12], teethGroup[13]
+          , teethGroup[14], teethGroup[15]];
+        this.table2Row2 = [teethGroup[23], teethGroup[22]
+          , teethGroup[21], teethGroup[20]
+          , teethGroup[19], teethGroup[18]
+          , teethGroup[17], teethGroup[16]
+          , teethGroup[24], teethGroup[25]
+          , teethGroup[26], teethGroup[27]
+          , teethGroup[28], teethGroup[29]
+          , teethGroup[30], teethGroup[31]];
+          console.log(this.table1Row1);
+          console.log(this.table1Row2);
+          console.log(this.table2Row1);
+          console.log(this.table2Row2);
+          // this.analysisResultForTable[0].groupType = teethGroup;
+          // this.recordResultForTable[0].teeth = teethRecord;
+        });
+        // console.log(this.recordResultForTable[0].teeth);
+        
     } else if (!this.hideClassroom && this.hideIndividual && this.hideSchool) {
       const info = {
         type: "classroom",
         classroom: this.selectedStudentAnalysisResult.analyzeSchoolRoom,
         school: this.selectedStudentAnalysisResult.analyzeSchool
       }
-      this.insert.getChartData(info).subscribe(res => {
+      this.insert.getReportData(info).subscribe(res => {
         for (var i = 0; i < res.length; i++) {
-          this.analysisResult = new AnalysisResult();
-          this.analysisResult.analysisID = res[i][0];
-          this.analysisResult.analyzeDate = res[i][1];
-          this.analysisResult.analyzeSchool = res[i][2];
-          this.analysisResult.analyzeSchoolRoom = res[i][3];
-          this.analysisResult.analyzeStudentID = res[i][4];
-          this.analysisResult.analyzeDentUsername = res[i][5];
-          this.analysisResult.analyzeMilkDMFT = res[i][6];
-          this.analysisResult.analyzePermanentDMFT = res[i][7];
-          this.analysisResult.analyzeStudentName = res[i][8];
-          this.analysisResult.groupType = res[i][9];
-          this.analysisResult.gender = res[i][10];
-          this.retrievedAnalysisList.push(this.analysisResult);
-        }
-      });
-      var dateList = [];
-      for (var i = 0; i < this.retrievedAnalysisList.length; i++) {
-        dateList.push(this.retrievedAnalysisList[i].analyzeDate);
-      }
-      // this.barChartLabels = dateList;
-      var dataList = [];
-      for (var i = 0; i < this.retrievedAnalysisList.length; i++) {
-        dataList.push({ data: this.retrievedAnalysisList[i].analyzeMilkDMFT, label: "Milk DMFT" });
-      }
-    } else if (!this.hideSchool && this.hideIndividual && this.hideClassroom) {
-      const info = {
-        type: "school",
-        school: this.selectedStudentAnalysisResult.analyzeSchool
-      }
-      this.insert.getChartData(info).subscribe(res => {
-        for (var i = 0; i < res.length; i++) {
-          this.analysisResult = new AnalysisResult();
-          this.analysisResult.analysisID = res[i][0];
-          this.analysisResult.analyzeDate = res[i][1];
-          this.analysisResult.analyzeSchool = res[i][2];
-          this.analysisResult.analyzeSchoolRoom = res[i][3];
-          this.analysisResult.analyzeStudentID = res[i][4];
-          this.analysisResult.analyzeDentUsername = res[i][5];
-          this.analysisResult.analyzeMilkDMFT = res[i][6];
-          this.analysisResult.analyzePermanentDMFT = res[i][7];
-          this.analysisResult.analyzeStudentName = res[i][8];
-          this.analysisResult.groupType = res[i][9];
-          this.analysisResult.gender = res[i][10];
-          this.retrievedAnalysisList.push(this.analysisResult);
+          console.log(res[i]);
+          // this.analysisResult = new AnalysisResult();
+          // this.analysisResult.analysisID = res[i][0];
+          // this.analysisResult.analyzeDate = res[i][1];
+          // this.analysisResult.analyzeSchool = res[i][2];
+          // this.analysisResult.analyzeSchoolRoom = res[i][3];
+          // this.analysisResult.analyzeStudentID = res[i][4];
+          // this.analysisResult.analyzeDentUsername = res[i][5];
+          // this.analysisResult.analyzeMilkDMFT = res[i][6];
+          // this.analysisResult.analyzePermanentDMFT = res[i][7];
+          // this.analysisResult.analyzeStudentName = res[i][8];
+          // this.analysisResult.groupType = res[i][9];
+          // this.analysisResult.gender = res[i][10];
+          // this.retrievedAnalysisList.push(this.analysisResult);
         }
       });
     }
-    // this.show = true;
+    //  else if (!this.hideSchool && this.hideIndividual && this.hideClassroom) {
+    //   const info = {
+    //     type: "school",
+    //     school: this.selectedStudentAnalysisResult.analyzeSchool
+    //   }
+    //   this.insert.getReportData(info).subscribe(res => {
+    //     for (var i = 0; i < res.length; i++) {
+    //       this.analysisResult = new AnalysisResult();
+    //       this.analysisResult.analysisID = res[i][0];
+    //       this.analysisResult.analyzeDate = res[i][1];
+    //       this.analysisResult.analyzeSchool = res[i][2];
+    //       this.analysisResult.analyzeSchoolRoom = res[i][3];
+    //       this.analysisResult.analyzeStudentID = res[i][4];
+    //       this.analysisResult.analyzeDentUsername = res[i][5];
+    //       this.analysisResult.analyzeMilkDMFT = res[i][6];
+    //       this.analysisResult.analyzePermanentDMFT = res[i][7];
+    //       this.analysisResult.analyzeStudentName = res[i][8];
+    //       this.analysisResult.groupType = res[i][9];
+    //       this.analysisResult.gender = res[i][10];
+    //       this.retrievedAnalysisList.push(this.analysisResult);
+    //     }
+    //   });
+    // }
+    this.showGraph = true;
     this.hideClassroom = true;
     this.hideIndividual = true;
     this.hideSchool = true;
   }
   assignGroupType(recordPast: RecordResult, recordPresent: RecordResult) {
-    this.ind13 = 0, this.ind14 = 0, this.ind15 = 0, this.ind16 = 0, this.ind17 = 0, this.ind18 = 0;
     this.analysisResult = new AnalysisResult();
     this.analysisResult.analyzeDate = recordPresent.recordDate;
     this.analysisResult.analyzeSchool = recordPresent.schoolName;
@@ -341,6 +517,9 @@ export class DevelopmentComponent implements OnInit {
     this.analysisResult.analyzeStudentID = recordPresent.studentID;
     this.teethBuffer = [];
     for (var i = 0; i < 32; i++) {
+      this.ind13 = 0, this.ind14 = 0, this.ind15 = 0, this.ind16 = 0, this.ind17 = 0, this.ind18 = 0;
+      this.individualVar = [];
+      this.variableArray = [];
       switch (recordPast.teeth[i]) {
         case "0": {
           if (recordPresent.teeth[i] === "A") {
@@ -359,20 +538,39 @@ export class DevelopmentComponent implements OnInit {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "0") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "1") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "2") {
             this.groupType = "CH1,Tx1";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH0,Tx0";
+            this.ind14++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "9") {
@@ -401,16 +599,28 @@ export class DevelopmentComponent implements OnInit {
             this.groupType = "CH2";
           } else if (recordPresent.teeth[i] === "2") {
             this.groupType = "CH1,Tx1";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "CH0,Tx0";
+            this.ind14++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "Tx2";
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "Tx0";
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "9") {
@@ -441,14 +651,21 @@ export class DevelopmentComponent implements OnInit {
             this.groupType = "CH2";
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "Tx0";
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "Tx2";
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "Tx0";
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "9") {
@@ -477,16 +694,24 @@ export class DevelopmentComponent implements OnInit {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "2") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "CH2";
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "Tx0";
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "9") {
@@ -589,18 +814,36 @@ export class DevelopmentComponent implements OnInit {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "1") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "2") {
             this.groupType = "CH1,Tx1";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "Tx2";
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "9") {
@@ -627,18 +870,25 @@ export class DevelopmentComponent implements OnInit {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "1") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "2") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "9") {
@@ -663,20 +913,39 @@ export class DevelopmentComponent implements OnInit {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "0") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "1") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "2") {
             this.groupType = "CH1,Tx1";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH0,Tx0";
+            this.ind14++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH9";
           } else if (recordPresent.teeth[i] === "9") {
@@ -725,36 +994,72 @@ export class DevelopmentComponent implements OnInit {
         case "A": {
           if (recordPresent.teeth[i] === "A") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "B") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "C") {
             this.groupType = "CH1,Tx1";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
           } else if (recordPresent.teeth[i] === "D") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "E") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "F") {
             this.groupType = "CH0,Tx0";
+            this.ind14++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "G") {
             this.groupType = "CH1,CH3";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "0") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "1") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "2") {
             this.groupType = "CH1,Tx1";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH0,Tx0";
+            this.ind14++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "9") {
             this.groupType = "CH9";
           }
@@ -771,26 +1076,54 @@ export class DevelopmentComponent implements OnInit {
             this.groupType = "CH3";
           } else if (recordPresent.teeth[i] === "E") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "F") {
             this.groupType = "CH0,Tx0";
+            this.ind14++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "G") {
             this.groupType = "Tx0";
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "0") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "1") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "2") {
             this.groupType = "CH1,Tx1";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH0,Tx0";
+            this.ind14++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH9";
           } else if (recordPresent.teeth[i] === "9") {
@@ -807,28 +1140,54 @@ export class DevelopmentComponent implements OnInit {
             this.groupType = "CH2";
           } else if (recordPresent.teeth[i] === "D") {
             this.groupType = "Tx0";
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "E") {
             this.groupType = "Tx2";
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "F") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "G") {
             this.groupType = "Tx0";
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "0") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "1") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "2") {
             this.groupType = "CH1,Tx1";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH0,Tx0";
+            this.ind14++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH9";
           } else if (recordPresent.teeth[i] === "9") {
@@ -843,30 +1202,57 @@ export class DevelopmentComponent implements OnInit {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "C") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "D") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "E") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "F") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "G") {
             this.groupType = "Tx0";
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "0") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "1") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "2") {
             this.groupType = "CH1,Tx1";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH0,Tx0";
+            this.ind14++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH9";
           } else if (recordPresent.teeth[i] === "9") {
@@ -891,20 +1277,39 @@ export class DevelopmentComponent implements OnInit {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "0") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "1") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "2") {
             this.groupType = "CH1,Tx1";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH0,Tx0";
+            this.ind14++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH9";
           } else if (recordPresent.teeth[i] === "9") {
@@ -917,32 +1322,66 @@ export class DevelopmentComponent implements OnInit {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "B") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "C") {
             this.groupType = "CH1,Tx1";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
           } else if (recordPresent.teeth[i] === "D") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "E") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "F") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "G") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "0") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "1") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "2") {
             this.groupType = "CH1,Tx1";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH0,Tx0";
+            this.ind14++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH9";
           } else if (recordPresent.teeth[i] === "9") {
@@ -961,26 +1400,50 @@ export class DevelopmentComponent implements OnInit {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "E") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "F") {
             this.groupType = "CH8";
           } else if (recordPresent.teeth[i] === "G") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "0") {
             this.groupType = "CH0";
+            this.ind14++;
           } else if (recordPresent.teeth[i] === "1") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "2") {
             this.groupType = "CH1,Tx1";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
           } else if (recordPresent.teeth[i] === "3") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "4") {
             this.groupType = "CH1,Tx2";
+            this.ind13++;
+            this.ind15++;
+            this.ind17++;
+            this.ind18++;
           } else if (recordPresent.teeth[i] === "5") {
             this.groupType = "CH1";
+            this.ind13++;
           } else if (recordPresent.teeth[i] === "6") {
             this.groupType = "CH0,Tx0";
+            this.ind14++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "7") {
             this.groupType = "CH1,Tx0";
+            this.ind13++;
+            this.ind15++;
+            this.ind16++;
           } else if (recordPresent.teeth[i] === "8") {
             this.groupType = "CH9";
           } else if (recordPresent.teeth[i] === "9") {
@@ -990,6 +1453,23 @@ export class DevelopmentComponent implements OnInit {
         }
       }
       this.teethBuffer.push(this.groupType);
+      this.individualVar.push(this.ind13);
+      this.individualVar.push(this.ind14);
+      this.individualVar.push(this.ind15);
+      this.individualVar.push(this.ind16);
+      this.individualVar.push(this.ind17);
+      this.individualVar.push(this.ind18);
+      this.variableArray.push(this.individualVar);
+    }
+    const info = {
+      studentID: this.analysisResult.analyzeStudentID,
+      recordDate: this.analysisResult.analyzeDate,
+      in13: this.variableArray[0][0],
+      in14: this.variableArray[0][1],
+      in15: this.variableArray[0][2],
+      in16: this.variableArray[0][3],
+      in17: this.variableArray[0][4],
+      in18: this.variableArray[0][5]
     }
     const analysisReport = {
       studentID: this.analysisResult.analyzeStudentID,
@@ -1029,13 +1509,8 @@ export class DevelopmentComponent implements OnInit {
     }
     this.insert.assignGroup(analysisReport).subscribe(data => {
     })
-  }
-  public chartClicked(e:any):void {
-    console.log(e);
-  }
- 
-  public chartHovered(e:any):void {
-    console.log(e);
+    this.insert.updateIndividualReport(info).subscribe(data => {
+    })
   }
 }
 

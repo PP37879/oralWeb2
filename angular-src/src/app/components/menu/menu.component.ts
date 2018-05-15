@@ -59,6 +59,7 @@ export class MenuComponent implements OnInit {
   ind12: number;
   individualVar : number[];
   variableArray : number[][];
+  showChart : boolean;
   constructor(private insert: InsertService,
     private datePipe: DatePipe) {
   }
@@ -70,6 +71,7 @@ export class MenuComponent implements OnInit {
     this.getUnAnalyzeResult();
     this.variableArray = [];
     this.individualVar = [];
+    this.showChart = false;
   }
 
   getUnAnalyzeResult() {
