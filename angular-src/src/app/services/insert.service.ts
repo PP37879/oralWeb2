@@ -197,4 +197,23 @@ export class InsertService {
       return  Observable.of(false) ;
      }); ;
   }
+
+  getResultAnalysisOfClass(info){
+    let url = Connect.getHostUrl()+'/getLatestResultAndAnalysisOfClass.php';
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url, info, header).map((res: Response) => { return res.json()}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
+  }
+
+  createClassReport(info){
+    let url = Connect.getHostUrl()+'/createClassReport.php';
+    let header = { headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'}) };
+    return this.http.post(url, info , header).map((res: Response) => { return this.parseData(res)}).catch((error: any) => { 
+      console.log(error);
+      return  Observable.of(false) ;
+     }); ;
+  }
+
 }

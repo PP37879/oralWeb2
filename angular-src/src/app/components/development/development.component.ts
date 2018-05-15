@@ -128,7 +128,13 @@ export class DevelopmentComponent implements OnInit {
   table1Row2: string[];
   table2Row1: string[];
   table2Row2: string[];
+  recordClass: RecordResult;
+  analysisClass: AnalysisResult;
+  totalClassRecord: RecordResult[];
+  totalClassAnalysis: AnalysisResult[];
   constructor(private insert: InsertService) {
+    this.totalClassRecord = [];
+    this.totalClassAnalysis = [];
     this.schoolList = [];
     this.classList = [];
     this.idList = [];
@@ -312,6 +318,7 @@ export class DevelopmentComponent implements OnInit {
         this.idList.push(this.analysisList[i].analyzeStudentID);
       }
     }
+    this.calculateDataForClassReport();
   }
   onSelectID(studentID) {
     this.selectedStudentAnalysisResult.analyzeStudentID = studentID;
@@ -392,29 +399,29 @@ export class DevelopmentComponent implements OnInit {
           { data: this.newCariesData, label: lab[2] }
         ];
       });
-        this.recordResultForTable = [];
-        this.analysisResultForTable = [];
-        var teethGroup = [];
-        var teethRecord = [];
-        this.insert.getDataForTable(this.selectedID).subscribe(data => {
-          console.log(data);
-          var analysis: AnalysisResult;
-          analysis = new AnalysisResult;
-          var record: RecordResult;
-          record = new RecordResult;
-          this.analysisResultForTable.push(analysis);
-          this.recordResultForTable.push(record);
-          this.analysisResultForTable[0].analyzeStudentID = data[0][4];
-          this.analysisResultForTable[0].analyzeDentUsername = data[0][5];
-          for (var j = 0; j < 32; j++) {
-            var k = +6;
-            var l = +44;
-            teethGroup.push(data[0][k+j]);
-            teethRecord.push(data[0][l+j]);
-          }
-          console.log(teethGroup);
-           console.log(teethRecord);
-           this.table1Row1 = [teethRecord[7], teethRecord[6]
+      this.recordResultForTable = [];
+      this.analysisResultForTable = [];
+      var teethGroup = [];
+      var teethRecord = [];
+      this.insert.getDataForTable(this.selectedID).subscribe(data => {
+        console.log(data);
+        var analysis: AnalysisResult;
+        analysis = new AnalysisResult;
+        var record: RecordResult;
+        record = new RecordResult;
+        this.analysisResultForTable.push(analysis);
+        this.recordResultForTable.push(record);
+        this.analysisResultForTable[0].analyzeStudentID = data[0][4];
+        this.analysisResultForTable[0].analyzeDentUsername = data[0][5];
+        for (var j = 0; j < 32; j++) {
+          var k = +6;
+          var l = +44;
+          teethGroup.push(data[0][k + j]);
+          teethRecord.push(data[0][l + j]);
+        }
+        console.log(teethGroup);
+        console.log(teethRecord);
+        this.table1Row1 = [teethRecord[7], teethRecord[6]
           , teethRecord[5], teethRecord[4]
           , teethRecord[3], teethRecord[2]
           , teethRecord[1], teethRecord[0]
@@ -430,8 +437,8 @@ export class DevelopmentComponent implements OnInit {
           , teethRecord[26], teethRecord[27]
           , teethRecord[28], teethRecord[29]
           , teethRecord[30], teethRecord[31]];
-  
-          this.table2Row1 = [teethGroup[7], teethGroup[6]
+
+        this.table2Row1 = [teethGroup[7], teethGroup[6]
           , teethGroup[5], teethGroup[4]
           , teethGroup[3], teethGroup[2]
           , teethGroup[1], teethGroup[0]
@@ -447,15 +454,15 @@ export class DevelopmentComponent implements OnInit {
           , teethGroup[26], teethGroup[27]
           , teethGroup[28], teethGroup[29]
           , teethGroup[30], teethGroup[31]];
-          console.log(this.table1Row1);
-          console.log(this.table1Row2);
-          console.log(this.table2Row1);
-          console.log(this.table2Row2);
-          // this.analysisResultForTable[0].groupType = teethGroup;
-          // this.recordResultForTable[0].teeth = teethRecord;
-        });
-        // console.log(this.recordResultForTable[0].teeth);
-        
+        console.log(this.table1Row1);
+        console.log(this.table1Row2);
+        console.log(this.table2Row1);
+        console.log(this.table2Row2);
+        // this.analysisResultForTable[0].groupType = teethGroup;
+        // this.recordResultForTable[0].teeth = teethRecord;
+      });
+      // console.log(this.recordResultForTable[0].teeth);
+
     } else if (!this.hideClassroom && this.hideIndividual && this.hideSchool) {
       const info = {
         type: "classroom",
@@ -1512,5 +1519,155 @@ export class DevelopmentComponent implements OnInit {
     this.insert.updateIndividualReport(info).subscribe(data => {
     })
   }
+
+  calculateDataForClassReport() {
+    const info = {
+      school: this.selectedSchool,
+      classroom: this.selectedClass
+    }
+    console.log(info);
+    this.insert.getResultAnalysisOfClass(info).subscribe(data => {
+      this.cl1 = 0; this.cl2 = 0; this.cl3 = 0; this.cl4 = 0; this.cl5 = 0;
+      this.cl6 = 0; this.cl7 = 0; this.cl8 = 0; this.cl9 = 0; this.cl10 = 0;
+      this.cl11 = 0; this.cl12 = 0; this.cl13 = 0; this.cl14 = 0; this.cl15 = 0;
+      this.cl16 = 0; this.cl17 = 0; this.cl18 = 0; this.cl19 = 0; this.cl20 = 0;
+      this.cl21 = 0; this.cl22 = 0; this.cl23 = 0; this.cl24 = 0; this.cl25 = 0;
+      this.cl26 = 0; this.cl27 = 0;
+      for (var i = 0; i < data.length; i++) {
+        var dCount = +0;
+        var bigDCount = +0;
+        var ch1CountIndividual = +0;
+        var tx012CountIndividual = +0;
+        console.log(data[i][10]);
+        this.recordClass = new RecordResult();
+        this.analysisClass = new AnalysisResult();
+        this.analysisClass.analysisID = data[i][0];
+        this.analysisClass.analyzeDate = data[i][1];
+        this.analysisClass.analyzeSchool = data[i][2];
+        this.analysisClass.analyzeSchoolRoom = data[i][3];
+        this.analysisClass.analyzeStudentID = data[i][4];
+        this.analysisClass.analyzeDentUsername = data[i][5];
+        for (var k = 6; k < 37; k++) {
+          if (data[i][k].includes("CH1")) {
+            ch1CountIndividual++;
+            this.cl17++;
+          }
+          if (data[i][k].includes("CH0")) {
+            this.cl20++;
+          }
+          if (data[i][k].includes("Tx0") || data[i][k].includes("Tx1") || data[i][k].includes("Tx2")) {
+            this.cl21++;
+            tx012CountIndividual++;
+          }
+          if (data[i][k].includes("Tx0")) {
+            this.cl23++;
+          }
+          if (data[i][k].includes("Tx1") || data[i][k].includes("Tx2")) {
+            this.cl24++;
+          }
+          if (data[i][k].includes("Tx2")) {
+            this.cl25++;
+          }
+        }
+        this.cl7 += +data[i][40];
+        this.cl13 += +data[i][41]
+        //this.cl8 -> calculate outside cl8 = cl7/data.length
+        for (var l = 44; l < 76; l++) {
+          if (data[i][l] === "A" || data[i][l] === "B" ||
+            data[i][l] === "C" || data[i][l] === "D" || data[i][l] === "F" || data[i][l] === "G") {
+            this.cl1++;
+          }
+          if (data[i][l] === "0" || data[i][l] === "1" ||
+            data[i][l] === "2" || data[i][l] === "3" || data[i][l] === "6" || data[i][l] === "7") {
+            this.cl2++;
+          }
+          if (data[i][l] === "A" || data[i][l] === "F") {
+            this.cl3++;
+          }
+          if (data[i][l] === "B" || data[i][l] === "C") {
+            this.cl4++;
+            dCount++;
+          }
+          if (data[i][l] === "D" || data[i][l] === "G") {
+            this.cl5++;
+          }
+          if (data[i][l] === "E") {
+            this.cl6++;
+          }
+          if (data[i][l] === "0" || data[i][l] === "6") {
+            this.cl9++;
+          }
+          if (data[i][l] === "1" || data[i][l] === "2") {
+            this.cl10++;
+            bigDCount++;
+          }
+          if (data[i][l] === "3" || data[i][l] === "7") {
+            this.cl11++;
+          }
+          if (data[i][l] === "4") {
+            this.cl12++;
+          }
+        }
+        if (data[i][40] === 0 && data[i][41] === 0) {
+          this.cl14++;
+        }
+
+        if (dCount === 0 && bigDCount === 0) {
+          this.cl26++;
+        } else if (dCount > 0 || bigDCount > 0) {
+          this.cl27++;
+        }
+
+        if (ch1CountIndividual > 0) {
+          this.cl18++;
+        }
+        if (tx012CountIndividual > 0) {
+          this.cl22++;
+        }
+        //cl15 calculate outside for loop => cl14/data.length
+        //cl16 calculate outside also
+      }
+      this.cl8 = this.cl7 / data.length;
+      this.cl15 = this.cl14 / data.length;
+      this.cl16 = this.cl13 / data.length;
+      this.cl19 = (this.cl7 / (this.cl1 + this.cl2)) * 100;
+      const info = {
+        genDate : this.analysisClass.analyzeDate,
+        school : this.selectedSchool,
+        classroom : this.selectedClass,
+        c1 : this.cl1,
+        c2 : this.cl2,
+        c3 : this.cl3,
+        c4 : this.cl4,
+        c5 : this.cl5,
+        c6 : this.cl6,
+        c7 : this.cl7,
+        c8 : this.cl8,
+        c9 : this.cl9,
+        c10 : this.cl10,
+        c11 : this.cl11,
+        c12 : this.cl12,
+        c13 : this.cl13,
+        c14 : this.cl14,
+        c15 : this.cl15,
+        c16 : this.cl16,
+        c17 : this.cl17,
+        c18 : this.cl18,
+        c19 : this.cl19,
+        c20 : this.cl20,
+        c21 : this.cl21,
+        c22 : this.cl22,
+        c23 : this.cl23,
+        c24 : this.cl24,
+        c25 : this.cl25,
+        c26 : this.cl26,
+        c27 : this.cl27
+      }
+      this.insert.createClassReport(info).subscribe(data=>{
+        console.log(data);
+      })
+    })
+  }
+
 }
 
