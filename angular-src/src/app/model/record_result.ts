@@ -9,4 +9,5 @@ export class RecordResult{
     schoolName : string;
     classroom : string;
     gender : string;
+    age : number;
 }

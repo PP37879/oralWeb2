@@ -41,6 +41,7 @@
     "datauri": "^1.1.0",
     "file-saver": "^1.3.3",
     "html2canvas": "^1.0.0-alpha.12",
+    "js2excel": "^1.0.0",
     "jspdf": "^1.3.5",
     "jspdf-autotable": "^2.3.2",
     "moment": "^2.22.1",

@@ -216,4 +216,14 @@ export class InsertService {
      }); ;
   }
 
+  getResultForExcel(){
+    let url  = Connect.getHostUrl()+'/getResultForExcel.php';
+    return this.http.get(url).map((res)=>{return res.json()});
+  }
+
+  getSchoolListForExcel(){
+    let url = Connect.getHostUrl()+'/getResultSchoolList.php';
+    return this.http.get(url).map((res)=>{return res.json()});
+  }
+
 }
