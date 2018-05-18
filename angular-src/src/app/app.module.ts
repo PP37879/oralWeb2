@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { PDFComponent } from './components/pdf/pdf.component';
 import { ExcelComponent } from './components/excel/excel.component';
 import { ImportComponent } from './components/import/import.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -38,7 +37,6 @@ const appRoutes : Routes = [
   {path : 'register' , component : RegisterComponent},
   {path : 'import' , component : ImportComponent,canActivate:[AuthGuard]},
   {path : 'menu' , component : MenuComponent,canActivate:[AuthGuard]},
-  {path : 'pdf' , component : PDFComponent,canActivate:[AuthGuard]},
   {path : 'excel' , component : ExcelComponent,canActivate:[AuthGuard]},
   {path : 'file' , component : FileComponent,canActivate:[AuthGuard]},
   {path : 'usermanagement',component:UsermanagementComponent,canActivate:[AuthGuard]},
@@ -57,8 +55,7 @@ const appRoutes : Routes = [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent,
-    PDFComponent,
+    RegisterComponent,  
     ExcelComponent,
     ImportComponent,
     MenuComponent,

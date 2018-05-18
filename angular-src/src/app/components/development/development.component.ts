@@ -380,7 +380,6 @@ export class DevelopmentComponent implements OnInit {
           var normalOrFilledTeeth = this.report.ind3 + this.report.ind5 + this.report.ind8 + this.report.ind10;
           var previousCariesTeeth = countCH2;
           var newCariesTeeth = countCH1;
-          // console.log(normalOrFilledTeeth);
           this.normalorFilledData.push(normalOrFilledTeeth);
           this.previousCariesData.push(previousCariesTeeth);
           this.newCariesData.push(newCariesTeeth);
@@ -392,10 +391,6 @@ export class DevelopmentComponent implements OnInit {
         this.successfulCariesPrevention = this.reportList[0].ind14;
         this.previousDentalServiceReceive = this.reportList[0].ind15;
         this.presentNewCaries = this.newCariesData[0];
-        // console.log(this.normalorFilledData);
-        // console.log(this.previousCariesData);
-        // console.log(this.newCariesData);
-        // console.log(lab);
         this.barChartData = [
           { data: this.normalorFilledData, label: lab[0] },
           { data: this.previousCariesData, label: lab[1] },
@@ -1718,8 +1713,8 @@ export class DevelopmentComponent implements OnInit {
   downloadForDentist() {
     html2canvas(document.getElementById('forDentist')).then(function (canvas) {
       var img = canvas.toDataURL("image/png");
-      var doc = new jsPDF();
-      doc.addImage(img, 'JPEG', 13, 40);
+      var doc = new jsPDF('l','pt','a3');
+      doc.addImage(img, 'JPEG',80,150);
       doc.save('student_ResultForDentist.pdf');
     });
   }

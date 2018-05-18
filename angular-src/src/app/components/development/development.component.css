@@ -12,6 +12,7 @@ input, button , select{
 }
 
 .selectForm{
+    align-self: center;
     text-align: center;
     font-family: 'Mitr', 'cursive';
     padding: 1px;
@@ -22,13 +23,13 @@ input, button , select{
 table{
     align-content: center;
     font-family: 'Open Sans', sans-serif;
-    /* width: 100%; */
+    width: 50%;
     font-size: 12px;
     table-layout: fixed;
 	margin: 0; padding: 0;
     border-collapse: collapse;
-    margin-top: 3%;
-    margin-bottom : 10%;
+    margin-top: 2%;
+    margin-bottom : 2%;
 }
 
 th,td{
@@ -45,7 +46,8 @@ th,td{
 }
 
 td{
-    color: black
+    color: black;
+    text-align: center;
 }
 #status{
     font-weight: bolder; 
@@ -66,4 +68,15 @@ button{
     font-size: 20px;
     width: 20%;
     margin:5%;
+}
+#forParents{
+    margin-bottom : 10%;
+    width: 50%;
+
+}
+#forParents,#forDentist,h3,h4{
+    font-family: 'Open Sans', sans-serif;
+}
+h3,h4{
+    font-weight: 100;
 }

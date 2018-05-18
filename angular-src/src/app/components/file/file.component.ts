@@ -3,6 +3,7 @@ import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
 import { InsertService } from '../../services/insert.service';
 import { Student } from '../../model/student';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 import * as XLSX from 'ts-xlsx';
 @Component({
@@ -154,26 +155,21 @@ export class FileComponent implements OnInit {
     this.int.ins(this.std).subscribe(
       response => {
         if (response == true) {
-
+          this.flashMessage.show('Student Data imported successfully.',{cssClass:'alert-success',timeout:3000});
+          this.router.navigate(['/menu']);
         } else {
-
+          this.flashMessage.show('Error when trying to import student data.',{cssClass:'alert-danger',timeout:3000});
         }
       })
   }
 
-  constructor(private int: InsertService) {
+  constructor(private int: InsertService,
+              private flashMessage : FlashMessagesService,
+              private router: Router) {
     this.std = new Student();
   }
 
-
   ngOnInit() {
-    // this.dataService.convertExcelToJson().subscribe(inputfile => {
-    //   this.file = inputfile.file;
-    //   console.log(this.file);
-    // }, err => {
-    //   console.log(err);
-    //   return false;
-    // });
   }
 
 
