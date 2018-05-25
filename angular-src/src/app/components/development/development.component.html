@@ -40,16 +40,6 @@
       <button type="submit" class="btn btn-success" (click)="showChart()">OK</button>
     </div>
   </div>
-  <!-- <div class="inputSchool" *ngIf="!hideSchool">
-    <h2 id="smallHeader">School Oral Health Status Chart</h2>
-    <label>Select School</label>
-    <select class="form-control" id="school" [(ngModel)]="selectedSchool" (change)="onSelectSchool($event.target.value)" [ngModelOptions]="{standalone: true}">
-      <option value="{{school}}" *ngFor="let school of schoolList">{{school}}</option>
-    </select>
-    <div class="forBtn">
-      <button type="submit" class="btn btn-success" (click)="showChart()">OK</button>
-    </div>
-  </div> -->
 </form>
 <div *ngIf="showGraph" align="center">
   <div id="forParents">
